@@ -1,0 +1,63 @@
+✅ make sure the user pasting data is url.
+✅ show some detail and when clicked the data is automatically pasted and saved.
+✅ see why /private-route can be accessed without logged-in
+
+
+when link in email is clicked : try to verify the user automatically however if failed make user to punch code manually.
+
+if no links to display then display your own dummy links.
+
+when you are on private route the vault link name and function should be able to toggalable.
+
+
+
+✅ update the vault code.
+✅ reset the vault code...
+✅ update the credentials password.
+✅ reset the credentail password ...
+    to reset a password you need to send a token in email. upon opening that email link user is redirected to password reset page. where user enter the new Password
+
+✅ login with Oauth : google, github.
+
+✅ work with extension.
+
+update the fallbackurl...
+
+create an intro for link locker using introjs
+
+figure out a way to keep /private-links unlocked when refresh only lock when you visit different route than /private-route.
+
+404 page..
+
+============================================================================
+=============================== Improvements ===============================
+============================================================================
+✅ http://localhost:3000/ -> paragraph not seen light mode
+    here (This links are provided by Link Locker because your links are empty) the paragraph is not seen in light mode.
+
+✅ Add remove account feature.
+    add a feature that can make user to remove the account from link
+    to remove an account you need to insert a current account password
+
+Account Document not created 
+    when signin via credentials. Only the User document is created but not the account document. Account document should be created because account and user have releations.
+
+✅ http://localhost:3000/sign-in -> button not disabled
+    when login the reset password button is not disabled.
+
+✅ http://localhost:3000/profile -> button not disabled
+    when updating the profile the change vault code and change password button is not disabled.
+
+✅ http://localhost:3000/profile -> button not seen light mode
+    the dialog appear when clicking change vault code has a button reset vault code that is not seen in light mode.
+
+http://localhost:3000/profile -> ask a password change question 
+    when password is changed ask a question do you want to continue this session or logout this session.
+
+✅ http://localhost:3000/private-link -> display loading state.
+    . display loading state when async function is running. display loading state when vault code is entered
+    . the loading state can be similar to that of verify-user
+
+follow the url 
+    you have manually typed url http://localhost:3000/profile however you are not logged in so didn't redirect to profile page. 
+    implement a feature where you are redirected to profile page after logged in
