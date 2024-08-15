@@ -1,9 +1,8 @@
 "use client";
 
 import { LinkLockerBackgroundColorStyle } from "@/constants/background-color";
-import { LinkLockerSignInPage } from "@/constants/routes";
+import { LinkLockerLogoutPage, LinkLockerSignInPage } from "@/constants/routes";
 import { RemoveAccountServer } from "@/servers/remove-account-server";
-import { SignOutClient } from "@/servers/signout-client";
 import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useState, useTransition } from "react";
@@ -18,7 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { signOut } from "next-auth/react";
 
 type RemoveAccountProps = {
   isPending: boolean;
@@ -43,7 +41,8 @@ const RemoveAccount = (props: RemoveAccountProps) => {
         ));
 
         if (message === "Account Deleted Successfully") {
-          await signOut({ callbackUrl: LinkLockerSignInPage, redirect: true });
+          // await signOut({ callbackUrl: LinkLockerSignInPage, redirect: false });
+          router.push(LinkLockerLogoutPage);
         }
 
         router.push(LinkLockerSignInPage);
