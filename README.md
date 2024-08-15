@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# <p align="center"> **Link Locker** </p>
 
-## Getting Started
+Link Locker is a secure and convenient tool designed to help you manage and store your important links. With the Link Locker extension, you can easily save URLs from any website with just a click. Once logged in, the web app and extension take care of the rest, ensuring your links are safely stored in a personalized vault.
 
-First, run the development server:
+## Database Configuration
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**DATABASE_URL**: The URL of your database connection string.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authentication
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**AUTH_GITHUB_ID**: GitHub OAuth Client ID.
+**AUTH_GITHUB_SECRET**: GitHub OAuth Client Secret.
+**AUTH_GOOGLE_ID**: Google OAuth Client ID.
+**AUTH_GOOGLE_SECRET**: Google OAuth Client Secret.
+**AUTH_SECRET**: A secret key used for signing cookies and tokens in your authentication flow.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> [!IMPORTANT]
+> Note: The authentication key should prefixed with `AUTH_` so that Auth JS can easily identify it.
 
-## Learn More
+## Email Configuration
 
-To learn more about Next.js, take a look at the following resources:
+**GMAIL_ID**: Your Gmail email address used for sending emails.
+**GMAIL_PASS**: The app-specific password for your Gmail account.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Application URL
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**NEXT_PUBLIC_URL**: The public URL where your Next.js application is hosted. This is important for building proper links and for use in OAuth callbacks.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Extension URL
+**EXTENSION_URL**: The URL of the extension. This is used for the extension to communicate with the backend.

@@ -5,10 +5,9 @@
 
 when link in email is clicked : try to verify the user automatically however if failed make user to punch code manually.
 
-if no links to display then display your own dummy links.
+✅ if no links to display then display your own dummy links.
 
-when you are on private route the vault link name and function should be able to toggalable.
-
+✅ when you are on private route the vault link name and function should be able to toggalable. (private to unprivate and vice versa)
 
 
 ✅ update the vault code.
@@ -21,13 +20,13 @@ when you are on private route the vault link name and function should be able to
 
 ✅ work with extension.
 
-update the fallbackurl...
+✅ update the fallbackurl...
 
-create an intro for link locker using introjs
+✅ create an intro for link locker using react-joyride
 
 figure out a way to keep /private-links unlocked when refresh only lock when you visit different route than /private-route.
 
-404 page..
+✅ 404 page..
 
 ============================================================================
 =============================== Improvements ===============================

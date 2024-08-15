@@ -5,8 +5,12 @@ import {
   LinkLockerSignInPage,
   UnauthenticatedRoutes,
 } from "./constants/routes";
+import { env } from "./env";
 
-const allowedOrigins = ["chrome-extension://gjgbgfgbobcnoaedgcolgamagcnhncbd"];
+const allowedOrigins = [
+  // "chrome-extension://gjgbgfgbobcnoaedgcolgamagcnhncbd",
+  env.EXTENSION_URL,
+];
 
 const corsOptions = {
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
