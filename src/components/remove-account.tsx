@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { signOut } from "next-auth/react";
 
 type RemoveAccountProps = {
   isPending: boolean;
@@ -42,7 +43,7 @@ const RemoveAccount = (props: RemoveAccountProps) => {
         ));
 
         if (message === "Account Deleted Successfully") {
-          await SignOutClient();
+          await signOut({ callbackUrl: LinkLockerSignInPage, redirect: true });
         }
 
         router.push(LinkLockerSignInPage);

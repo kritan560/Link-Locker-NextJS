@@ -3,6 +3,7 @@
 import {
   LinkLockerPrivateLinkRoute,
   LinkLockerProfileRoute,
+  LinkLockerSignInPage,
 } from "@/constants/routes";
 import { DropdownMenuItemStyle } from "@/constants/tailwind";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 type LinkLockerProfileAvatarProps = {
   authUserImage: string | null | undefined;
@@ -32,7 +34,7 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   async function handleSignout() {
-    await SignOutClient();
+    await signOut({ callbackUrl: LinkLockerSignInPage, redirect: true });
 
     nProgress.start();
   }
