@@ -7,16 +7,13 @@ import {
 } from "./constants/routes";
 import { env } from "./env";
 
-const allowedOrigins = [
-  // "chrome-extension://gjgbgfgbobcnoaedgcolgamagcnhncbd",
-  env.EXTENSION_URL,
-];
+const allowedOrigins = [env.EXTENSION_URL_PROD, env.EXTENSION_URL];
 
 const corsOptions = {
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
   // enabling this to 'true' Access-Control-Allow-Credentials will only allow to work with CORS and credentials. Here i face a problem with my chrome extension unable to communicate to nextjs backend that should access the session of logged in user enabling this and restarting the server works for me
   "Access-Control-Allow-Credentials": "true",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
 export default auth((request) => {

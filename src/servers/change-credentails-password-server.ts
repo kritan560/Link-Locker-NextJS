@@ -71,7 +71,7 @@ export async function ChangeCredentialPasswordServer(
       message: "OAuth Account does not have password",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       success: false,

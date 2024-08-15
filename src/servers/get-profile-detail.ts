@@ -35,7 +35,7 @@ export async function GetProfileDetail(
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       data: null,

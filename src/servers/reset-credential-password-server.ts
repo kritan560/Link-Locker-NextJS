@@ -82,7 +82,7 @@ export async function ResetCredentialPasswordServer(
       message: "Failed to upadate User",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       data: null,

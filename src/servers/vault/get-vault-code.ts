@@ -29,7 +29,7 @@ export async function GetVaultCode(
       message: "Got Vault Code",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {
       success: false,
       data: null,

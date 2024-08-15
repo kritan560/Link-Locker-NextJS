@@ -43,7 +43,7 @@ export async function TransportMail(
 
     return { success: false, message: TransportMailEnum.FAILED };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return { success: false, message: TransportMailEnum.ERROR };
   }
 }

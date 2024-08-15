@@ -35,7 +35,7 @@ export async function DeletePrivateLink(
       success: false,
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     
     return { data: null, message: "Something went wrong", success: false };
   }

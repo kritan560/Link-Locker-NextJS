@@ -90,7 +90,7 @@ export async function RequestCredentialPasswordResetTokenServer(
       message: "Account type is not credentials",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       success: false,

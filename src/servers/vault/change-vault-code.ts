@@ -71,7 +71,7 @@ export async function ChangeVaultCode(
       };
     }
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {
       data: null,
       message: "Something went wrong!!!",

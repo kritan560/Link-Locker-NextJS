@@ -16,7 +16,7 @@ export async function POST(
       });
     };
 
-    await waitFor(2000);
+    await waitFor(900);
 
     const session = await auth();
     const userId = session?.user.id;
@@ -82,7 +82,7 @@ export async function POST(
       message: "URL Saved Into Database",
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return NextResponse.json({
       success: false,

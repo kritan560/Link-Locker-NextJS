@@ -173,7 +173,7 @@ const LinkComponent = (props: LinkComponentProps) => {
           error
         />
       ));
-      console.error(error);
+      // console.error(error);
     }
   }
 

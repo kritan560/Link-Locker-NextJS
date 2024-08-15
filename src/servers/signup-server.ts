@@ -118,7 +118,7 @@ export async function SignUpServer(
       message: "Please check your email to verify your account",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return { success: false, message: "Something went wrong!!!", data: null };
   }

@@ -44,7 +44,7 @@ export async function ProfileUpdateServer(
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       data: null,

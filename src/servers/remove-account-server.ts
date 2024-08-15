@@ -36,7 +36,7 @@ export async function RemoveAccountServer(): Promise<RemoveAccountServerReturnTy
       message: "Account Deleted Successfully",
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     return {
       success: false,
