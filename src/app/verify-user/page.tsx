@@ -2,6 +2,12 @@ import { auth } from "@/auth";
 import VerifyUserOTP from "@/components/auth/verify-user-otp";
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
+import { Metadata } from "next";
+
+// either Static metadata
+export const metadata: Metadata = {
+  title: 'Verify User',
+}
 
 const VerifyUserPage = async () => {
   const session = await auth()

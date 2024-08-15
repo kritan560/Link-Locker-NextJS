@@ -1,6 +1,12 @@
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import ResetCredentialPasswordForm from "@/components/reset-credential-password-form";
+import { Metadata } from "next";
+
+// either Static metadata
+export const metadata: Metadata = {
+  title: 'Reset Credential Password',
+}
 
 type ResetCredentialPasswordPageProps = {
   searchParams: { token: string };

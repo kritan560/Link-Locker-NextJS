@@ -1,8 +1,6 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import type { CallBackProps, Step } from "react-joyride";
 import Joyride, { EVENTS, STATUS } from "react-joyride";
-import Image from "next/image";
 
 interface State {
   run: boolean;
@@ -27,7 +25,8 @@ const TourGuide = ({ start, setStartTour, onTourEnd }: TourGuideProps) => {
         <div className="mb-4 flex flex-col gap-4 px-2 text-left">
           <p className="mr-4 text-base font-bold">Spinning Lock Pad..</p>
           <p className="mr-2 text-sm">
-            This is your lock pad, click on it will redirect to the homepage
+            This is your Lock Pad, clicking on it will redirect you to the Link
+            Locker Homepage
           </p>
           <div className="absolute bottom-[30px] left-[38%] text-sm text-neutral-400">
             {val} of {totalSteps}
@@ -51,6 +50,10 @@ const TourGuide = ({ start, setStartTour, onTourEnd }: TourGuideProps) => {
           <p className="mr-2 text-sm">
             You can paste your copied link by clicking on this link
           </p>
+          <p className="font-medium text-sm">
+            NOTE : Browser will ask for clipboard permission make sure to give
+            clipboard permission to Link Locker else won&apos;t work
+          </p>
           <div className="absolute bottom-[30px] left-[38%] text-sm text-neutral-400">
             {val} of {totalSteps}
           </div>
@@ -71,7 +74,7 @@ const TourGuide = ({ start, setStartTour, onTourEnd }: TourGuideProps) => {
         <div className="mb-4 flex flex-col gap-4 px-2 text-left">
           <p className="mr-4 text-base font-bold">What is This???</p>
           <p className="mr-2 text-sm">
-            You can also paster your link by clicking this Icon
+            You can also paste your link by clicking on this Icon
           </p>
           <div className="absolute bottom-[30px] left-[38%] text-sm text-neutral-400">
             {val} of {totalSteps}

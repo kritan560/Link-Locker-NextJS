@@ -1,4 +1,5 @@
-import LinkLockerLogo from "@/images/LinkLockerLogo.png";
+import LinkLockerLogo from '../../public/LinkLockerLogo.png'
+
 import Image from "next/image";
 
 type LockAnimationProps = {

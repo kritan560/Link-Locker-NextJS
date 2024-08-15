@@ -47,37 +47,30 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
                 <>
                   <LuDot size={22} />
                   <ClipboardContext>
-                    <span className="text-sky-500">{data.description}</span>
+                    {/* <span className="text-sky-500">{data.description}</span> */}
+                    {data.description}
                   </ClipboardContext>
                 </>
               )}
 
-            {data.type === LinkLockerDescriptionEnum.LINK &&
-              data.id !== "guide-me-id" && (
-                <>
-                  <LuDot size={22} />
-
-                  <Link href={"#"} className="text-sky-500">
-                    {data.description}
-                  </Link>
-                </>
-              )}
-
             {data.type === LinkLockerDescriptionEnum.BUTTON &&
-              data.id === "guide-me-id" && (
+              data.id === "guide-me-id" &&
+              showButton && (
                 <div
                   onClick={handleStartTour}
                   className="cursor-pointer flex gap-x-1 items-center"
                 >
                   <LuDot size={22} />
-                  <span className="text-sky-500">{data.description}</span>
+                  {/* <span className="text-sky-500">{data.description}</span> */}
+                  {data.description}
                 </div>
               )}
 
             {data.type === LinkLockerDescriptionEnum.STRING && (
               <>
                 <LuDot size={22} />
-                <li className="capitalize">{data.description}</li>
+                {/* <li className="capitalize">{data.description}</li> */}
+                {data.description}
               </>
             )}
           </div>

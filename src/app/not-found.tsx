@@ -1,9 +1,9 @@
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { LinkLockerHomepage } from "@/constants/routes";
-import NotFoundImage from "@/images/not-found.jpeg";
 import Image from "next/image";
 import Link from "next/link";
+import NotFoundImage from "../../public/not-found.jpeg";
 
 const NotFoundPage = () => {
   return (

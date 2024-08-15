@@ -1,6 +1,12 @@
 import SignInForm from "@/components/auth/signin-form";
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
+import { Metadata } from "next";
+
+// either Static metadata
+export const metadata: Metadata = {
+  title: 'Sign-In',
+}
 
 const SignInPage = async () => {
   return (

@@ -3,6 +3,12 @@ import { ProfileUpdateForm } from "@/components/auth/profile-update-form";
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { GetProfileDetail } from "@/servers/get-profile-detail";
+import { Metadata } from "next";
+
+// either Static metadata
+export const metadata: Metadata = {
+  title: 'Profile Page',
+}
 
 const ProfilePage = async () => {
   const session = await auth();
