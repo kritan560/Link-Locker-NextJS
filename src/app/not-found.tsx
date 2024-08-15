@@ -3,7 +3,6 @@ import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { LinkLockerHomepage } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
-import NotFoundImage from "../../public/not-found.jpeg";
 
 const NotFoundPage = () => {
   return (
@@ -29,7 +28,7 @@ const NotFoundPage = () => {
             </Link>
           </h1>
           <Image
-            src={NotFoundImage}
+            src={"/not-found.jpeg"}
             alt="Not Found"
             fill
             style={{ objectFit: "cover" }}

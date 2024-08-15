@@ -1,5 +1,3 @@
-import LinkLockerLogo from '../../public/LinkLockerLogo.png'
-
 import Image from "next/image";
 
 type LockAnimationProps = {
@@ -13,7 +11,9 @@ const LockAnimation = (props: LockAnimationProps) => {
   return (
     <Image
       id="step-0"
-      src={LinkLockerLogo}
+      width={size}
+      height={size}
+      src={"/LinkLockerLogo.png"}
       alt="logo"
       style={{ height: size, width: size }}
       className="animate-spin-slow cursor-pointer transition-all spin hover:animate-spin hover:scale-105 active:scale-100"
