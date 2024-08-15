@@ -16,7 +16,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span>
-        <span className="font-medium text-sky-900 dark:text-sky-500">Store</span> Your Links
+        <span className="font-medium ">Store</span> Your Links
       </span>
     ),
   },
@@ -25,7 +25,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
-        Share Your <span className="font-medium text-sky-900 dark:text-sky-500">Saved Links</span>
+        Share Your <span className="font-medium ">Saved Links</span>
       </span>
     ),
   },
@@ -34,7 +34,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
-        View Your <span className="font-medium text-sky-900 dark:text-sky-500">Links</span>
+        View Your <span className="font-medium ">Links</span>
       </span>
     ),
   },
@@ -43,7 +43,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
-        <span className="font-medium text-sky-900 dark:text-sky-500">Blur</span> Your Links
+        <span className="font-medium ">Blur</span> Your Links
       </span>
     ),
   },
@@ -52,7 +52,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
-        Store links in <span className="font-medium text-sky-900 dark:text-sky-500">Private Vault</span>
+        Store links in <span className="font-medium ">Private Vault</span>
       </span>
     ),
   },
@@ -61,7 +61,10 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.LINK,
     description: (
       <span>
-        Get <span className="font-medium text-sky-900 dark:text-sky-500">Chrome Extension</span>
+        Get{" "}
+        <span className="font-medium text-sky-800 dark:text-sky-500 cursor-pointer">
+          Chrome Extension
+        </span>
       </span>
     ),
   },
@@ -69,14 +72,21 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     type: LinkLockerDescriptionEnum.BUTTON,
     description: (
       <span className="">
-        Click to <span className="font-medium text-sky-900 dark:text-sky-500">add Copied URL</span>
+        Click here to{" "}
+        <span className="font-medium cursor-pointer text-sky-800 dark:text-sky-500">
+          add Copied Link
+        </span>
       </span>
     ),
     id: "step-1",
   },
   {
     type: LinkLockerDescriptionEnum.BUTTON,
-    description: <span className="text-sky-900 dark:text-sky-500 font-medium">Guide Me</span>,
+    description: (
+      <span className="text-sky-800 dark:text-sky-500  font-medium">
+        Guide Me
+      </span>
+    ),
     id: "guide-me-id",
   },
 ];

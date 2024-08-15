@@ -3,7 +3,7 @@
 import { LinkLockerBackgroundColorStyle } from "@/constants/background-color";
 import { LinkLockerSignInPage } from "@/constants/routes";
 import { RemoveAccountServer } from "@/servers/remove-account-server";
-import { SignOutServer } from "@/servers/signout-server";
+import { SignOutClient } from "@/servers/signout-client";
 import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useState, useTransition } from "react";
@@ -42,7 +42,7 @@ const RemoveAccount = (props: RemoveAccountProps) => {
         ));
 
         if (message === "Account Deleted Successfully") {
-          await SignOutServer();
+          await SignOutClient();
         }
 
         router.push(LinkLockerSignInPage);

@@ -39,6 +39,7 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
         <span className="text-sky-500">Link Locker </span> Includes
       </p>
       <ul className="mt-2 list-none">
+        <span className="underline font-medium">Benefits of using Link Locker</span>
         {LinkLockerDescription.map((data, index) => (
           <div id={data.id} key={index} className="flex gap-x-1  items-center">
             {data.type == LinkLockerDescriptionEnum.BUTTON &&

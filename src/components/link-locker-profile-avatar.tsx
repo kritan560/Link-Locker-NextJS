@@ -6,8 +6,7 @@ import {
 } from "@/constants/routes";
 import { DropdownMenuItemStyle } from "@/constants/tailwind";
 import { cn } from "@/lib/utils";
-// import { signOut } from "next-auth/react";
-import { SignOutServer } from "@/servers/signout-server";
+import { SignOutClient } from "@/servers/signout-client";
 import Image from "next/image";
 import Link from "next/link";
 import nProgress from "nprogress";
@@ -33,7 +32,7 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   async function handleSignout() {
-    await SignOutServer();
+    await SignOutClient();
 
     nProgress.start();
   }
