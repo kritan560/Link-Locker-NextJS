@@ -12,7 +12,6 @@ import nProgress from "nprogress";
 import { useEffect, useTransition } from "react";
 import toast from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
-import LinkLockerLogo from "../../public/LinkLockerLogo.png";
 
 /**
  * This component is used to generate the Vault code for oauth user
@@ -56,7 +55,7 @@ const StagingOauthUser = () => {
         <div className="flex justify-center items-center">
           <div className="md:h-52 md:w-52 h-36 w-36 relative">
             <Image
-              src={LinkLockerLogo}
+              src={"/LinkLockerLogo.png"}
               alt="Image Logo"
               fill
               className="animate-spin-slow"

@@ -162,7 +162,6 @@ const TourGuide = ({ start, setStartTour, onTourEnd }: TourGuideProps) => {
       spotlightPadding={6}
       showProgress
       showSkipButton
-      debug
       styles={{
         overlay: {
           border: "1px solid skyblue",

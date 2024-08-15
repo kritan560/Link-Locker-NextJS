@@ -7,6 +7,10 @@ const IS_SERVER = typeof window === "undefined";
  * @returns string
  */
 export function GetBaseURL() {
-  const baseURL = IS_SERVER ? env.NEXT_PUBLIC_URL! : window.location.origin;
+  const baseURL = env.NEXT_PUBLIC_URL;
   return baseURL;
 }
+// export function GetBaseURL() {
+//   const baseURL = IS_SERVER ? env.NEXT_PUBLIC_URL! : window.location.origin;
+//   return baseURL;
+// }
