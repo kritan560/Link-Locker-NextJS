@@ -8,16 +8,6 @@ export async function POST(
   request: NextRequest
 ): Promise<NextResponse<SaveLinkReturnType>> {
   try {
-    const waitFor = (ms: number) => {
-      return new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, ms);
-      });
-    };
-
-    await waitFor(900);
-
     const session = await auth();
     const userId = session?.user.id;
 

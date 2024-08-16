@@ -63,6 +63,9 @@ type LinkComponentProps = {
 const LinkComponent = (props: LinkComponentProps) => {
   const { content, showFallbackOptions = false } = props;
 
+  // you can use useOptmistic update inplace of useState i choose to use useState coz you don't have to router.refresh() after data mutation to merge with fresh data.
+  const [linkBlur, setLinkBlur] = useState(content.blur);
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -123,19 +126,16 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleBlurToggleClick() {
+    setLinkBlur(!linkBlur);
+
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
       const { data, message, success } = await BlurPrivateLink(content);
 
-      if (success) {
-        router.refresh();
-        toast.custom((t) => (
-          <LinkLockerToastJSX t={t} toastMessage={message} />
-        ));
-      }
       if (!success) {
         toast.custom((t) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
+        setLinkBlur(content.blur);
       }
 
       return;
@@ -143,15 +143,11 @@ const LinkComponent = (props: LinkComponentProps) => {
 
     const { data, message, success } = await BlurLink(content);
 
-    if (success) {
-      router.refresh();
-      toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={message} />);
-    }
-
     if (!success) {
       toast.custom((t) => (
         <LinkLockerToastJSX t={t} toastMessage={message} error />
       ));
+      setLinkBlur(content.blur);
     }
   }
 
@@ -191,6 +187,7 @@ const LinkComponent = (props: LinkComponentProps) => {
         ));
         router.refresh();
       }
+
       if (!success) {
         toast.custom((t) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
@@ -217,7 +214,7 @@ const LinkComponent = (props: LinkComponentProps) => {
   return (
     <>
       <div className="flex justify-between gap-x-4 items-center bg-stone-800 rounded-full py-2 px-4">
-        <LinkLockerTooltip contentBlur={content.blur} content={content.url}>
+        <LinkLockerTooltip contentBlur={linkBlur} content={content.url}>
           {content.url}
         </LinkLockerTooltip>
 
@@ -257,7 +254,7 @@ const LinkComponent = (props: LinkComponentProps) => {
                 className={DropdownMenuItemStyle}
               >
                 <div className={CopyToClipboardStyle}>
-                  <p className="">{content.blur ? "Un-Blur" : "Blur"}</p>
+                  <p className="">{linkBlur ? "Un-Blur" : "Blur"}</p>
                   <MdBlurOn className="" />
                 </div>
               </DropdownMenuItem>

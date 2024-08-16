@@ -3,14 +3,13 @@
 import {
   LinkLockerLogoutPage,
   LinkLockerPrivateLinkRoute,
-  LinkLockerProfileRoute,
-  LinkLockerSignInPage,
+  LinkLockerProfileRoute
 } from "@/constants/routes";
 import { DropdownMenuItemStyle } from "@/constants/tailwind";
 import { cn } from "@/lib/utils";
-import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
@@ -23,7 +22,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useRouter } from "next/navigation";
 
 type LinkLockerProfileAvatarProps = {
   authUserImage: string | null | undefined;
@@ -61,6 +59,7 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
                 src={`${authUserImage}?v=2`}
                 alt="User image"
                 fill
+                sizes="(min-width: 808px) 50vw, 100vw"
                 style={{ objectFit: "cover" }}
               />
             </div>

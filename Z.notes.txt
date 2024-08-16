@@ -60,3 +60,5 @@ http://localhost:3000/profile -> ask a password change question
 follow the url 
     you have manually typed url http://localhost:3000/profile however you are not logged in so didn't redirect to profile page. 
     implement a feature where you are redirected to profile page after logged in
+
+use optimistic update for delete and private url unprivate url..

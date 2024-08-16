@@ -5,8 +5,8 @@ import { Metadata } from "next";
 
 // either Static metadata
 export const metadata: Metadata = {
-  title: 'Link Locker',
-}
+  title: "Link Locker",
+};
 
 export default async function HomePage() {
   const session = await auth();
@@ -18,7 +18,5 @@ export default async function HomePage() {
   const userId = session.user.id;
   const { data: urls } = await GetLinks(userId);
 
-  return (
-    <MainPageTourGuide session={session} urls={urls} />
-  );
+  return <MainPageTourGuide session={session} urls={urls} />;
 }

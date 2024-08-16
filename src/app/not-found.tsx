@@ -31,6 +31,7 @@ const NotFoundPage = () => {
             src={"/not-found.jpeg"}
             alt="Not Found"
             fill
+            sizes="(min-width: 808px) 50vw, 100vw"
             style={{ objectFit: "cover" }}
           />
         </div>

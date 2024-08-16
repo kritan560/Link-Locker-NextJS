@@ -6,6 +6,8 @@ export const LinkLockerPrivateLinkRoute = "/private-link";
 export const KritanGithubProfile = "https://github.com/kritan560";
 export const StagingOauth = "/staging-oauth";
 export const LinkLockerLogoutPage = "/logout";
+export const LinkLockerLinkTablePage = "/link-table";
+
 /**
  * @constant LinkLockerVerifyUserPage
  *
@@ -28,6 +30,7 @@ export const AuthenticatedRoutes = [
   LinkLockerPrivateLinkRoute,
   StagingOauth,
   LinkLockerLogoutPage,
+  LinkLockerLinkTablePage,
 ];
 
 /**

@@ -60,6 +60,7 @@ const StagingOauthUser = () => {
               src={"/LinkLockerLogo.png?v=2"}
               alt="Image Logo"
               fill
+              sizes="(min-width: 808px) 50vw, 100vw"
               className="animate-spin-slow"
               style={{ objectFit: "cover" }}
             />

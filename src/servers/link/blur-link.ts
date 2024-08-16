@@ -22,12 +22,10 @@ export async function BlurLink(url: Url): Promise<BlurLinkReturnType> {
       data: { blur: !url.blur },
     });
 
-    if (blurURL) {
-      if (blurURL.blur) {
-        return { data: null, message: "Link Blur", success: true };
-      }
-
+    if (blurURL.blur === false) {
       return { data: null, message: "Link Un-Blur", success: true };
+    } else {
+      return { data: null, message: "Link Blur", success: true };
     }
 
     return {

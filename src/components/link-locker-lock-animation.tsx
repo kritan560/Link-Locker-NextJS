@@ -15,6 +15,7 @@ const LockAnimation = (props: LockAnimationProps) => {
       height={size}
       src={"/LinkLockerLogo.png"}
       alt="logo"
+      sizes="(min-width: 808px) 50vw, 100vw"
       style={{ height: size, width: size }}
       className="animate-spin-slow cursor-pointer transition-all spin hover:animate-spin hover:scale-105 active:scale-100"
     />
