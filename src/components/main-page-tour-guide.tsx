@@ -38,7 +38,6 @@ const MainPageTourGuide = (props: MainPageTourGuideProps) => {
 
     if (doesLocalStorageHaveTourGuideStartedKey === null) {
       localStorage.setItem("tourGuideStarted", "true");
-      setStartTour(true);
     }
 
     setLoaded(true);

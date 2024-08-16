@@ -13,7 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   debug: process.env.NODE_ENV === "development",
   pages: { signIn: LinkLockerSignInPage, newUser: StagingOauth },
-  cookies : {},
+  cookies: {},
 
   providers: [
     GitHub({ allowDangerousEmailAccountLinking: true }),
@@ -93,7 +93,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   events: {
-    linkAccount: async ({ account, profile, user }) => {
+    linkAccount: async ({ user }) => {
       if (user.email && user.id) {
         await prisma.user.update({
           data: { emailVerified: new Date() },

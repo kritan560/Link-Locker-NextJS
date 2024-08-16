@@ -4,6 +4,7 @@ import LinkLockerLeftComponent from "@/components/link-locker-left-component";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { LinkLockerToastJSX } from "@/components/toast/link-locker-toast";
 import { LinkLockerHomepage } from "@/constants/routes";
+import { env } from "@/env";
 import { CreateVaultCodeOAuthUser } from "@/servers/create-vault-code-oauth-user";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,7 +39,8 @@ const StagingOauthUser = () => {
         ));
       }
 
-      router.push(LinkLockerHomepage);
+      // router.replace(LinkLockerHomepage);
+      window.location.href = env.NEXT_PUBLIC_URL;
       nProgress.start();
     });
   }, [router]);

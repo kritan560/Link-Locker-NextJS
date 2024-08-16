@@ -14,6 +14,13 @@ export async function CreateVaultCodeOAuthUser(): Promise<CreateVaultCodeOAuthUs
   try {
     const session = await auth();
     const userId = session?.user.id;
+    
+    if (!session) {
+      return {
+        message: "User not logged In",
+        success: false,
+      };
+    }
 
     const { hashedUnique6DigitCode, unique6digitCode } =
       await GenerateAndHashCode();
