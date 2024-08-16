@@ -40,7 +40,7 @@ const StagingOauthUser = () => {
       }
 
       // router.replace(LinkLockerHomepage);
-      window.location.href = env.NEXT_PUBLIC_URL;
+      window.location.href = LinkLockerHomepage;
       nProgress.start();
     });
   }, [router]);
