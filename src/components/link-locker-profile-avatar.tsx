@@ -58,7 +58,7 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
             >
               <Image
                 className="rounded-full cursor-pointer"
-                src={authUserImage}
+                src={`${authUserImage}?v=2`}
                 alt="User image"
                 fill
                 style={{ objectFit: "cover" }}
