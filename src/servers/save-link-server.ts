@@ -1,33 +1,27 @@
+"use server";
+
 import { auth } from "@/auth";
 import { LinkLockerPrivateLinkRoute } from "@/constants/routes";
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../prisma/db";
-import { SaveLinkReturnType } from "./route.reutrntype";
+import prisma from "../../prisma/db";
 
-export async function POST(
-  request: NextRequest
-): Promise<NextResponse<SaveLinkReturnType>> {
+type SaveLinkServerProps = {
+  clipboardData: string;
+  pathname: string;
+};
+
+export async function SaveLinkServer(props: SaveLinkServerProps) {
+  const { clipboardData, pathname } = props;
+
   try {
     const session = await auth();
     const userId = session?.user.id;
 
-    console.log(session, "<<<");
-    console.log(request.nextUrl);
-
     if (!userId || !session) {
-      return NextResponse.json({
-        isUserLoggedIn: false,
+      return {
         message: "user is not logged In",
         success: false,
-      });
+      };
     }
-
-    const body = await request.json();
-
-    const {
-      clipboardData,
-      pathname,
-    }: { clipboardData: string; pathname: string } = body;
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
       // check if private url already exist
@@ -36,10 +30,10 @@ export async function POST(
       });
 
       if (existingPrivateURL) {
-        return NextResponse.json({
+        return {
           message: "Private URL already saved in Database",
           success: false,
-        });
+        };
       }
 
       // Create a URL document for clipboardData
@@ -47,10 +41,10 @@ export async function POST(
         data: { url: clipboardData, userId },
       });
 
-      return NextResponse.json({
+      return {
         success: true,
         message: "Private URL Saved Into Database",
-      });
+      };
     }
 
     // check if URL already exist
@@ -59,10 +53,10 @@ export async function POST(
     });
 
     if (existingURL) {
-      return NextResponse.json({
+      return {
         message: "URL already saved in Database",
         success: false,
-      });
+      };
     }
 
     // Create a URL document for clipboardData
@@ -70,16 +64,16 @@ export async function POST(
       data: { url: clipboardData, userId },
     });
 
-    return NextResponse.json({
+    return {
       success: true,
       message: "URL Saved Into Database",
-    });
+    };
   } catch (error) {
     // console.error(error);
 
-    return NextResponse.json({
+    return {
       success: false,
       message: "Something went wrong!!!",
-    });
+    };
   }
 }

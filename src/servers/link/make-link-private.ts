@@ -18,6 +18,7 @@ type MakeLinkPrivateReturnType = {
 export async function MakeLinkPrivate(
   url: Url
 ): Promise<MakeLinkPrivateReturnType> {
+
   try {
     const existingUrl = await prisma.privateUrl.findFirst({
       where: { AND: [{ url: url.url, userId: url.userId }] },

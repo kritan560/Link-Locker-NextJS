@@ -13,7 +13,7 @@ const LockAnimation = (props: LockAnimationProps) => {
       id="step-0"
       width={size}
       height={size}
-      src={"/LinkLockerLogo.png"}
+      src={"/LinkLockerLogo.webp"}
       alt="logo"
       sizes="(min-width: 808px) 50vw, 100vw"
       style={{ height: size, width: size }}

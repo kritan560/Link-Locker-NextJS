@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import LinkLockerLogo from "../../public/LinkLockerLogo.png";
+import LinkLockerLogo from "../../public/LinkLockerLogo.webp";
 
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";

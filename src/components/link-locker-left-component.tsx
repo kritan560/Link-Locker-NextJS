@@ -3,6 +3,7 @@ import {
   LinkLockerDescriptionEnum,
 } from "@/constants/link-locker-description";
 import { LinkLockerHomepage } from "@/constants/routes";
+import { Url } from "@prisma/client";
 import Link from "next/link";
 import { LuDot } from "react-icons/lu";
 import ClipboardContext from "./link-locker-clipboard-context";
@@ -11,6 +12,7 @@ import LockAnimation from "./link-locker-lock-animation";
 type LinkLockerLeftComponentProps = {
   showButton: boolean;
   handleStartTour?: () => void;
+  addOptimisticUrls?: (action: Url) => void;
 };
 
 /**
@@ -18,7 +20,7 @@ type LinkLockerLeftComponentProps = {
  * @returns
  */
 const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
-  const { showButton, handleStartTour } = props;
+  const { showButton, handleStartTour, addOptimisticUrls = () => {} } = props;
 
   return (
     <div className="px-24 py-12 min-w-[50%] hidden md:block">
@@ -39,7 +41,9 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
         <span className="text-sky-500">Link Locker </span> Includes
       </p>
       <ul className="mt-2 list-none">
-        <span className="underline font-medium">Benefits of using Link Locker</span>
+        <span className="underline font-medium">
+          Benefits of using Link Locker
+        </span>
         {LinkLockerDescription.map((data, index) => (
           <div id={data.id} key={index} className="flex gap-x-1  items-center">
             {data.type == LinkLockerDescriptionEnum.BUTTON &&
@@ -47,8 +51,7 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
               data.id !== "guide-me-id" && (
                 <>
                   <LuDot size={22} />
-                  <ClipboardContext>
-                    {/* <span className="text-sky-500">{data.description}</span> */}
+                  <ClipboardContext addOptimisticUrls={addOptimisticUrls}>
                     {data.description}
                   </ClipboardContext>
                 </>

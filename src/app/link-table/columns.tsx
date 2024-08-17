@@ -59,7 +59,6 @@ export const columns: ColumnDef<LinkTableReturnUrlType[0]>[] = [
     },
     cell: ({ row }) => {
       const r = row.getValue("createdAt") as Date;
-      console.log(r);
 
       dayjs.extend(localizedFormat);
       const formatedDate = dayjs(r).format("LLL");
@@ -72,7 +71,6 @@ export const columns: ColumnDef<LinkTableReturnUrlType[0]>[] = [
     header: "Updated At",
     cell: ({ row }) => {
       const r = row.getValue("updatedAt") as Date;
-      console.log(r);
 
       dayjs.extend(localizedFormat);
       const formatedDate = dayjs(r).format("LLL");

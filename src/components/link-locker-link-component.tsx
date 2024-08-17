@@ -15,7 +15,7 @@ import { MakeLinkUnPrivate } from "@/servers/link/make-link-unprivate";
 import { Url } from "@prisma/client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { startTransition, useOptimistic, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
 import { BsReddit, BsThreeDots, BsTwitterX, BsWhatsapp } from "react-icons/bs";
@@ -63,14 +63,16 @@ type LinkComponentProps = {
 const LinkComponent = (props: LinkComponentProps) => {
   const { content, showFallbackOptions = false } = props;
 
-  // you can use useOptmistic update inplace of useState i choose to use useState coz you don't have to router.refresh() after data mutation to merge with fresh data.
-  const [linkBlur, setLinkBlur] = useState(content.blur);
-
   const router = useRouter();
   const pathname = usePathname();
 
   const [copied, setCopied] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const [optimisticContent, addOptimisticContent] = useOptimistic(
+    content,
+    (state, action: Url) => ({ ...state, ...action })
+  );
 
   if (copied) {
     setCopied(false);
@@ -89,16 +91,19 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleLinkDelete() {
-    // TODO : Implement the optimistic update right now the work around i did is to refresh the page
+    startTransition(() => {
+      addOptimisticContent({ ...optimisticContent, url: "" });
+    });
+
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
-      const { data, message, success } = await DeletePrivateLink(content.id);
+      const { data, message, success } = await DeletePrivateLink(
+        optimisticContent.id
+      );
 
       if (success) {
         router.refresh();
-        toast.custom((t) => (
-          <LinkLockerToastJSX t={t} toastMessage={message} />
-        ));
       }
+
       if (!success) {
         toast.custom((t) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
@@ -107,11 +112,11 @@ const LinkComponent = (props: LinkComponentProps) => {
 
       return;
     }
-    const { data, message, success } = await DeleteLink(content.id);
+
+    const { data, message, success } = await DeleteLink(optimisticContent.id);
 
     if (success) {
       router.refresh();
-      toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={message} />);
     }
 
     if (!success) {
@@ -126,28 +131,39 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleBlurToggleClick() {
-    setLinkBlur(!linkBlur);
+    addOptimisticContent({
+      ...optimisticContent,
+      blur: !optimisticContent.blur,
+    });
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
-      const { data, message, success } = await BlurPrivateLink(content);
+      const { data, message, success } = await BlurPrivateLink(
+        optimisticContent
+      );
+
+      if (success) {
+        router.refresh();
+      }
 
       if (!success) {
         toast.custom((t) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
-        setLinkBlur(content.blur);
       }
 
       return;
     }
 
-    const { data, message, success } = await BlurLink(content);
+    const { data, message, success } = await BlurLink(optimisticContent);
+
+    if (success) {
+      router.refresh();
+    }
 
     if (!success) {
       toast.custom((t) => (
         <LinkLockerToastJSX t={t} toastMessage={message} error />
       ));
-      setLinkBlur(content.blur);
     }
   }
 
@@ -178,13 +194,14 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleMakeLinkPrivate() {
+    addOptimisticContent({ ...optimisticContent, url: "" });
+
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
-      const { data, message, success } = await MakeLinkUnPrivate(content);
+      const { data, message, success } = await MakeLinkUnPrivate(
+        optimisticContent
+      );
 
       if (success) {
-        toast.custom((t) => (
-          <LinkLockerToastJSX t={t} toastMessage={message} />
-        ));
         router.refresh();
       }
 
@@ -197,10 +214,9 @@ const LinkComponent = (props: LinkComponentProps) => {
       return;
     }
 
-    const { data, message, success } = await MakeLinkPrivate(content);
+    const { data, message, success } = await MakeLinkPrivate(optimisticContent);
 
     if (success) {
-      toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={message} />);
       router.refresh();
     }
 
@@ -213,150 +229,182 @@ const LinkComponent = (props: LinkComponentProps) => {
 
   return (
     <>
-      <div className="flex justify-between gap-x-4 items-center bg-stone-800 rounded-full py-2 px-4">
-        <LinkLockerTooltip contentBlur={linkBlur} content={content.url}>
-          {content.url}
-        </LinkLockerTooltip>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="p-[2px] cursor-pointer">
-              <BsThreeDots size={20} />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-stone-900 dark:contrast-[.85]">
-            <DropdownMenuLabel className="text-center">
-              Actions
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <CopyToClipboard text={content.url} onCopy={handleCopyClipboard}>
-              <DropdownMenuItem className={DropdownMenuItemStyle}>
-                <div className="flex justify-between items-center w-full transition  cursor-pointer">
-                  <p className="">Copy</p>
-                  <FaRegCopy className="" />
-                </div>
-              </DropdownMenuItem>
-            </CopyToClipboard>
-            <DropdownMenuItem
-              id="dropdownmenuitem-share-id"
-              className={DropdownMenuItemStyle}
-              onClick={() => setDialogOpen(true)}
+      {optimisticContent.url.length > 0 && (
+        <>
+          <div className="flex justify-between gap-x-4 items-center bg-stone-800 rounded-full py-2 px-4">
+            <LinkLockerTooltip
+              contentBlur={optimisticContent?.blur}
+              content={optimisticContent.url}
             >
-              <div className={cn(CopyToClipboardStyle, DropdownMenuItemStyle)}>
-                <p>Share</p>
-                <IoMdShareAlt className="" />
-              </div>
-            </DropdownMenuItem>
-            {/* doesn't show this dropdown as fallback options */}
-            {!showFallbackOptions && (
-              <DropdownMenuItem
-                onClick={handleBlurToggleClick}
-                className={DropdownMenuItemStyle}
-              >
-                <div className={CopyToClipboardStyle}>
-                  <p className="">{linkBlur ? "Un-Blur" : "Blur"}</p>
-                  <MdBlurOn className="" />
+              {optimisticContent?.url}
+            </LinkLockerTooltip>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="p-[2px] cursor-pointer">
+                  <BsThreeDots size={20} />
                 </div>
-              </DropdownMenuItem>
-            )}{" "}
-            {!showFallbackOptions && (
-              <DropdownMenuItem
-                onClick={handleMakeLinkPrivate}
-                className={DropdownMenuItemStyle}
-              >
-                {!pathname.startsWith(LinkLockerPrivateLinkRoute) ? (
-                  <div className={CopyToClipboardStyle}>
-                    <p className="">Private</p>
-                    <SiPrivateinternetaccess className="" />
-                  </div>
-                ) : (
-                  <div className={CopyToClipboardStyle}>
-                    <p className="">Un-Private</p>
-                    <FaLockOpen className="" />
-                  </div>
-                )}
-              </DropdownMenuItem>
-            )}{" "}
-            <DropdownMenuItem className={DropdownMenuItemStyle} asChild>
-              <Link
-                target="_blank"
-                href={content.url}
-                className={CopyToClipboardStyle}
-              >
-                <p className="">Visit</p>
-                <FaRegEye />
-              </Link>
-            </DropdownMenuItem>
-            {!showFallbackOptions && (
-              <DropdownMenuItem
-                onClick={handleLinkDelete}
-                className={
-                  "text-red-500 active:text-red-600 duration-200 transition"
-                }
-              >
-                <div className={CopyToClipboardStyle}>
-                  <p className="">Delete</p>
-                  <MdDelete className="" />
-                </div>
-              </DropdownMenuItem>
-            )}{" "}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      {/* Dialog Component */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-[425px] md:max-w-[700px]">
-          <div className="space-y-6">
-            <p className="text-2xl font-medium">Share</p>
-
-            {/* logos */}
-            <div className="overflow-x-auto w-[375px] md:w-full">
-              <div className="flex gap-x-6 justify-between items-center mt-6">
-                {/* TODO : Update the reddit url title to production lInk locker url */}
-                <Link
-                  target="_blank"
-                  href={getRedditShareURL(
-                    "Link Locker Save Your Links",
-                    content.url
-                  )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="dark:bg-stone-900 dark:contrast-[.85]">
+                <DropdownMenuLabel className="text-center">
+                  Actions
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <CopyToClipboard
+                  text={optimisticContent.url}
+                  onCopy={handleCopyClipboard}
                 >
-                  <BsReddit size={55} />
-                </Link>
-                <Link target="_blank" href={getWhatsAppShareURL(content.url)}>
-                  <BsWhatsapp size={55} />
-                </Link>
-                <Link target="_blank" href={getXShareURL(content.url)}>
-                  <BsTwitterX size={55} />
-                </Link>
-                <Link target="_blank" href={getLinkedinURL(content.url)}>
-                  <FaLinkedin size={55} />
-                </Link>
-                <Link target="_blank" href={getFacebookURL(content.url)}>
-                  <FaFacebook size={55} />
-                </Link>
-                <Link
-                  target="_blank"
-                  href={`mailto:johndoe@gmail.com &subject=Sharing URL using Link Locker &body=This is the shared URL form link locker : ${content.url}`}
+                  <DropdownMenuItem className={DropdownMenuItemStyle}>
+                    <div className="flex justify-between items-center w-full transition  cursor-pointer">
+                      <p className="">Copy</p>
+                      <FaRegCopy className="" />
+                    </div>
+                  </DropdownMenuItem>
+                </CopyToClipboard>
+                <DropdownMenuItem
+                  id="dropdownmenuitem-share-id"
+                  className={DropdownMenuItemStyle}
+                  onClick={() => setDialogOpen(true)}
                 >
-                  <MdEmail size={55} />
-                </Link>
-              </div>
-            </div>
-
-            {/* link */}
-            <div className="flex gap-y-2 md:gap-x-5 items-center flex-col md:flex-row">
-              <Input value={content.url} disabled className="h-12 w-full" />
-              <Button
-                onClick={async () => writeClipboardText(content.url)}
-                className="rounded-full h-12 flex justify-center items-center px-6 text-white bg-sky-500 transition active:bg-sky-500 hover:bg-sky-600 w-full md:w-fit"
-              >
-                Copy
-              </Button>
-            </div>
+                  <div
+                    className={cn(CopyToClipboardStyle, DropdownMenuItemStyle)}
+                  >
+                    <p>Share</p>
+                    <IoMdShareAlt className="" />
+                  </div>
+                </DropdownMenuItem>
+                {/* doesn't show this dropdown as fallback options */}
+                {!showFallbackOptions && (
+                  <DropdownMenuItem
+                    onClick={handleBlurToggleClick}
+                    className={DropdownMenuItemStyle}
+                  >
+                    <div className={CopyToClipboardStyle}>
+                      <p className="">
+                        {optimisticContent?.blur ? "Un-Blur" : "Blur"}
+                      </p>
+                      <MdBlurOn className="" />
+                    </div>
+                  </DropdownMenuItem>
+                )}{" "}
+                {!showFallbackOptions && (
+                  <DropdownMenuItem
+                    onClick={handleMakeLinkPrivate}
+                    className={DropdownMenuItemStyle}
+                  >
+                    {!pathname.startsWith(LinkLockerPrivateLinkRoute) ? (
+                      <div className={CopyToClipboardStyle}>
+                        <p className="">Private</p>
+                        <SiPrivateinternetaccess className="" />
+                      </div>
+                    ) : (
+                      <div className={CopyToClipboardStyle}>
+                        <p className="">Un-Private</p>
+                        <FaLockOpen className="" />
+                      </div>
+                    )}
+                  </DropdownMenuItem>
+                )}{" "}
+                <DropdownMenuItem className={DropdownMenuItemStyle} asChild>
+                  <Link
+                    target="_blank"
+                    href={optimisticContent.url}
+                    className={CopyToClipboardStyle}
+                  >
+                    <p className="">Visit</p>
+                    <FaRegEye />
+                  </Link>
+                </DropdownMenuItem>
+                {!showFallbackOptions && (
+                  <DropdownMenuItem
+                    onClick={handleLinkDelete}
+                    className={
+                      "text-red-500 active:text-red-600 duration-200 transition"
+                    }
+                  >
+                    <div className={CopyToClipboardStyle}>
+                      <p className="">Delete</p>
+                      <MdDelete className="" />
+                    </div>
+                  </DropdownMenuItem>
+                )}{" "}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-        </DialogContent>
-      </Dialog>
+
+          {/* Dialog Component */}
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogContent className="max-w-[425px] md:max-w-[700px]">
+              <div className="space-y-6">
+                <p className="text-2xl font-medium">Share</p>
+
+                {/* logos */}
+                <div className="overflow-x-auto w-[375px] md:w-full">
+                  <div className="flex gap-x-6 justify-between items-center mt-6">
+                    {/* TODO : Update the reddit url title to production lInk locker url */}
+                    <Link
+                      target="_blank"
+                      href={getRedditShareURL(
+                        "Link Locker Save Your Links",
+                        optimisticContent.url
+                      )}
+                    >
+                      <BsReddit size={55} />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={getWhatsAppShareURL(optimisticContent.url)}
+                    >
+                      <BsWhatsapp size={55} />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={getXShareURL(optimisticContent.url)}
+                    >
+                      <BsTwitterX size={55} />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={getLinkedinURL(optimisticContent.url)}
+                    >
+                      <FaLinkedin size={55} />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={getFacebookURL(optimisticContent.url)}
+                    >
+                      <FaFacebook size={55} />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href={`mailto:johndoe@gmail.com &subject=Sharing URL using Link Locker &body=This is the shared URL form link locker : ${optimisticContent.url}`}
+                    >
+                      <MdEmail size={55} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* link */}
+                <div className="flex gap-y-2 md:gap-x-5 items-center flex-col md:flex-row">
+                  <Input
+                    value={optimisticContent.url}
+                    disabled
+                    className="h-12 w-full"
+                  />
+                  <Button
+                    onClick={async () =>
+                      writeClipboardText(optimisticContent.url)
+                    }
+                    className="rounded-full h-12 flex justify-center items-center px-6 text-white bg-sky-500 transition active:bg-sky-500 hover:bg-sky-600 w-full md:w-fit"
+                  >
+                    Copy
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
+      )}
     </>
   );
 };

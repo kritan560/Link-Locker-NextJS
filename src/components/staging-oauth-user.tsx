@@ -57,7 +57,7 @@ const StagingOauthUser = () => {
         <div className="flex justify-center items-center">
           <div className="md:h-52 md:w-52 h-36 w-36 relative">
             <Image
-              src={"/LinkLockerLogo.png?v=2"}
+              src={"/LinkLockerLogo.webp?v=2"}
               alt="Image Logo"
               fill
               sizes="(min-width: 808px) 50vw, 100vw"

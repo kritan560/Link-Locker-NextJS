@@ -166,7 +166,7 @@ const VaultCodeChange = (props: VaultCodeChangeProps) => {
             title="Reset Vault Code"
             isPending={isResetVaultCodePending}
             otherComponentPendingState={isPending}
-            buttonClass="bg-transparent hover:bg-transparent w-fit px-9 underline underline-offset-4 text-stone-800"
+            buttonClass="bg-transparent hover:bg-transparent w-fit px-9 underline underline-offset-4 text-stone-800 dark:text-stone-400"
           />
         </div>
         {/* reset vault code dialog. end */}

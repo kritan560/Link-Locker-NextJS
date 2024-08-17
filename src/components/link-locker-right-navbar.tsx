@@ -1,4 +1,7 @@
+'use client'
+
 import { KritanGithubProfile } from "@/constants/routes";
+import { Url } from "@prisma/client";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { FaPaste } from "react-icons/fa6";
@@ -9,10 +12,11 @@ import { ModeToggle } from "./mode-toggle";
 
 type LinkLockerRightNavbarProps = {
   session: Session | null;
+  addOptimisticUrls?: (action: Url) => void;
 };
 
 const LinkLockerRightNavbar = (props: LinkLockerRightNavbarProps) => {
-  const { session } = props;
+  const { session, addOptimisticUrls } = props;
 
   const authUserImage = session?.user.image;
 
@@ -35,7 +39,7 @@ const LinkLockerRightNavbar = (props: LinkLockerRightNavbarProps) => {
       </div>
       <div className="flex gap-x-2 md:gap-x-4 items-center">
         {session && (
-          <ClipboardContext>
+          <ClipboardContext addOptimisticUrls={addOptimisticUrls}>
             <FaPaste
               id="step-2"
               size={25}
@@ -43,7 +47,9 @@ const LinkLockerRightNavbar = (props: LinkLockerRightNavbarProps) => {
             />
           </ClipboardContext>
         )}
+
         <ModeToggle />
+
         {session ? (
           <LinkLockerProfileAvatar authUserImage={authUserImage} />
         ) : (

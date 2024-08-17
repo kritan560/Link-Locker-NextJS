@@ -18,5 +18,5 @@ export default async function HomePage() {
   const userId = session.user.id;
   const { data: urls } = await GetLinks(userId);
 
-  return <MainPageTourGuide session={session} urls={urls} />;
+  return <MainPageTourGuide session={session} urls={urls ? urls : []} />;
 }

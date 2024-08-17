@@ -1,21 +1,23 @@
 "use client";
 
-import { SaveLinkReturnType } from "@/app/api/save-link/route.reutrntype";
-import { env } from "@/env";
 import { UrlSchema } from "@/schemas/url-schema";
+import { SaveLinkServer } from "@/servers/save-link-server";
+import { Url } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
+import { startTransition } from "react";
 import toast from "react-hot-toast";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
 
 type ClipboardContextProps = {
   children: React.ReactNode;
+  addOptimisticUrls?: (action: Url) => void;
 };
 
 const ClipboardContext = (props: ClipboardContextProps) => {
-  const { children } = props;
+  const { children, addOptimisticUrls = () => {} } = props;
 
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleReadClipboard = async () => {
     try {
@@ -25,50 +27,41 @@ const ClipboardContext = (props: ClipboardContextProps) => {
       const { success, data, error } = UrlSchema.safeParse(text);
 
       if (success) {
-        toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={text} />);
-
-        // TODO: call API here to save the validated data. the user needs to be verified before saving link
-        const response = await fetch(`${env.NEXT_PUBLIC_URL}/api/save-link`, {
-          method: "POST",
-          body: JSON.stringify({ clipboardData: data, pathname }),
+        // TODO : make optimistic update
+        startTransition(() => {
+          // you have used addOptimistic url from useOptimistic useOptimistic is a React Hook that lets you show a different state while an async action is underway. which means you need to have async action underway here SaveLinkServer is async action that is underway.
+          addOptimisticUrls({
+            blur: false,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            id: crypto.randomUUID(),
+            userId: crypto.randomUUID(),
+            url: data,
+          });
         });
 
-        // TODO : make user of optimistic update for saving url into DB.
+        toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={data} />);
 
-        const responseJsonData =
-          (await response.json()) as Awaited<SaveLinkReturnType>;
+        const { message, success } = await SaveLinkServer({
+          clipboardData: data,
+          pathname,
+        });
 
-        if (responseJsonData.success) {
-          if (
-            responseJsonData.message === "URL Saved Into Database" ||
-            "Private URL Saved Into Database"
-          ) {
-            router.refresh();
-            toast.custom((t) => (
-              <LinkLockerToastJSX
-                t={t}
-                toastMessage={responseJsonData.message}
-              />
-            ));
-          }
+        if (success) {
+          router.refresh();
+
+          toast.custom((t) => (
+            <LinkLockerToastJSX t={t} toastMessage={message} />
+          ));
         }
-        if (!responseJsonData.success) {
-          if (
-            responseJsonData.message === "Something went wrong!!!" ||
-            "User Not Logged In"
-          ) {
-            toast.custom((t) => (
-              <LinkLockerToastJSX
-                t={t}
-                toastMessage={responseJsonData.message}
-                error
-              />
-            ));
-          }
+
+        if (!success) {
+          toast.custom((t) => (
+            <LinkLockerToastJSX t={t} toastMessage={message} error />
+          ));
         }
       }
 
-      // if error send the first error message as toast
       if (!success) {
         toast.custom((t) => (
           <LinkLockerToastJSX
@@ -82,6 +75,7 @@ const ClipboardContext = (props: ClipboardContextProps) => {
       console.error("Failed to read clipboard contents: ", err);
     }
   };
+
   return <div onClick={handleReadClipboard}>{children}</div>;
 };
 
