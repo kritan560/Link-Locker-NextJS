@@ -63,6 +63,7 @@ export default async function DemoPage() {
       // ...
     ];
   }
+
   const data = await getData();
 
   return (

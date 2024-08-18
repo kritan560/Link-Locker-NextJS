@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { KritanGithubProfile } from "@/constants/routes";
 import { Url } from "@prisma/client";
@@ -12,7 +12,7 @@ import { ModeToggle } from "./mode-toggle";
 
 type LinkLockerRightNavbarProps = {
   session: Session | null;
-  addOptimisticUrls?: (action: Url) => void;
+  addOptimisticUrls?: (action: Url[]) => void;
 };
 
 const LinkLockerRightNavbar = (props: LinkLockerRightNavbarProps) => {

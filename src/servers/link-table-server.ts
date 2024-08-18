@@ -16,7 +16,8 @@ type LinkTableServerReturnType = {
 };
 
 /**
- *
+ * 
+ * 
  * @param props - LinkTableServerProps
  */
 export async function LinkTableServer(

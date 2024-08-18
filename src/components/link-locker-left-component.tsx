@@ -12,7 +12,7 @@ import LockAnimation from "./link-locker-lock-animation";
 type LinkLockerLeftComponentProps = {
   showButton: boolean;
   handleStartTour?: () => void;
-  addOptimisticUrls?: (action: Url) => void;
+  addOptimisticUrls?: (action: Url[]) => void;
 };
 
 /**

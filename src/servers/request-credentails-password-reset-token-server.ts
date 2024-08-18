@@ -11,7 +11,7 @@ type RequestCredentialPasswordResetTokenServerReturnType = {
 };
 
 /**
- * This server action will reset the user password
+ * This server action will create teh password reset token and send that token to your registered email
  *
  * @returns
  */

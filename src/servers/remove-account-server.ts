@@ -9,6 +9,11 @@ type RemoveAccountServerReturnType = {
   message: string;
 };
 
+/**
+ * This server action will remove the user account of a Link Locker
+ *
+ * @returns
+ */
 export async function RemoveAccountServer(): Promise<RemoveAccountServerReturnType> {
   try {
     const session = await auth();

@@ -10,11 +10,17 @@ type CreateVaultCodeOAuthUserReturnType = {
   success: boolean;
 };
 
+/**
+ * This server action will generate the vault code for Verified Oauth user.
+ *
+ * Send the Vault code to registered email
+ * @returns
+ */
 export async function CreateVaultCodeOAuthUser(): Promise<CreateVaultCodeOAuthUserReturnType> {
   try {
     const session = await auth();
     const userId = session?.user.id;
-    
+
     if (!session) {
       return {
         message: "User not logged In",

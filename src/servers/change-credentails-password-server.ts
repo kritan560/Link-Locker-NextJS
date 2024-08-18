@@ -10,6 +10,15 @@ type ChangeCredentialPasswordReturnType = {
   data: null;
 };
 
+/**
+ * This server action will check for logged in user type (credentials or oauth)
+ * 
+ * if credentials then compare the password if match change the password
+ * 
+ * @param oldPassword - The old password
+ * @param newPassword - The new password
+ * @returns 
+ */
 export async function ChangeCredentialPasswordServer(
   oldPassword: string,
   newPassword: string

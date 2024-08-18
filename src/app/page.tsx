@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import MainPageTourGuide from "@/components/main-page-tour-guide";
-import { GetLinks } from "@/servers/link/get-links";
+import { GetLinks, GetLinksByPage } from "@/servers/link/get-links";
 import { Metadata } from "next";
 
 // either Static metadata
@@ -16,7 +16,7 @@ export default async function HomePage() {
   }
 
   const userId = session.user.id;
-  const { data: urls } = await GetLinks(userId);
+  const { data, message, success } = await GetLinks(userId);
 
-  return <MainPageTourGuide session={session} urls={urls ? urls : []} />;
+  return <MainPageTourGuide urls={data ? data : []} session={session} />;
 }

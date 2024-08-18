@@ -9,6 +9,11 @@ type SaveLinkServerProps = {
   pathname: string;
 };
 
+/**
+ * This server action logic is same as /save-link/route.ts the sole purpose of this creation of server action is because i need to process logic in server and fetching /save-link via client is not fitting the logic.
+ * @param props 
+ * @returns 
+ */
 export async function SaveLinkServer(props: SaveLinkServerProps) {
   const { clipboardData, pathname } = props;
 

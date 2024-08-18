@@ -45,7 +45,7 @@ const MainPageTourGuide = (props: MainPageTourGuideProps) => {
 
   const [optimisticUrls, addOptimisticUrls] = useOptimistic(
     urls,
-    (state, action: Url) => [...state, action]
+    (state, action: Url[]) => [...state, ...action]
   );
 
   if (!loaded) {

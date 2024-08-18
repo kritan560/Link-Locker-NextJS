@@ -28,7 +28,7 @@ const NotFoundPage = () => {
             </Link>
           </h1>
           <Image
-            src={"/not-found.jpeg"}
+            src={"/not-found.webp"}
             alt="Not Found"
             fill
             sizes="(min-width: 808px) 50vw, 100vw"

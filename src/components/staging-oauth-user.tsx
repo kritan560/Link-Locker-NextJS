@@ -5,7 +5,7 @@ import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { LinkLockerToastJSX } from "@/components/toast/link-locker-toast";
 import { LinkLockerHomepage } from "@/constants/routes";
 import { env } from "@/env";
-import { CreateVaultCodeOAuthUser } from "@/servers/create-vault-code-oauth-user";
+import { CreateVaultCodeOAuthUser } from "@/servers/create-vault-code-oauth-user-server";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -25,14 +25,15 @@ import bcrypt from "bcryptjs";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
-import { useState } from "react";
+import { useOptimistic, useState } from "react";
 import toast from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
 import LinkComponent from "../link-locker-link-component";
 import { LinkLockerToastJSX } from "../toast/link-locker-toast";
+import { Url } from "@prisma/client";
 
 type PrivateLinkComponentProps = {
-  urls: Awaited<ReturnType<typeof GetPrivateLinks>>["data"];
+  urls: Url[];
   session: Session;
 };
 
@@ -46,6 +47,11 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
   const [vaultCode, setVaultCode] = useState("");
   const [callBackend, setCallbackend] = useState(false);
   const [isPending, setPending] = useState(false);
+
+  const [optimisticPrivateLinks, addOptimisticPrivateLink] = useOptimistic(
+    urls,
+    (state, action: Url[]) => [...state, ...action]
+  );
 
   function handleCancelClick() {
     router.push(LinkLockerHomepage);
@@ -73,6 +79,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
         <LinkLockerToastJSX t={t} toastMessage={"Code did not match"} error />
       ));
     }
+
     setPending(false);
   }
 
@@ -87,16 +94,22 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
     return (
       <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
         {/* left size */}
-        <LinkLockerLeftComponent showButton={!!session} />
+        <LinkLockerLeftComponent
+          addOptimisticUrls={addOptimisticPrivateLink}
+          showButton={!!session}
+        />
 
         {/* right side */}
         <div className="md:w-[45%] w-full min-w-[250px] p-2">
-          <LinkLockerRightNavbar session={session} />
+          <LinkLockerRightNavbar
+            addOptimisticUrls={addOptimisticPrivateLink}
+            session={session}
+          />
 
           {/* links card */}
           <div className=" rounded-2xl px-6 bg-gray-50 dark:bg-stone-700 mt-2 h-[calc(100vh-170px)] relative  overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-500 scrollbar-thumb-rounded-full hover:scrollbar-thumb-sky-400 active:scrollbar-thumb-sky-500 shadow-md shadow-stone-400 dark:shadow-stone-600">
             <div className="text-center py-3 z-10 bg-gray-50 dark:bg-stone-700 font-semibold text-lg scale-105 sticky top-0">
-              {urls && urls.length > 0 ? (
+              {optimisticPrivateLinks.length > 0 ? (
                 <p>
                   {" "}
                   <span className="text-sky-500">Link</span> Locker Got Your
@@ -109,7 +122,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
 
             {/* links */}
             <div className="text-white space-y-3 my-1">
-              {urls?.map((url) => (
+              {optimisticPrivateLinks?.map((url) => (
                 <LinkComponent key={url.id} content={url} />
               ))}
             </div>

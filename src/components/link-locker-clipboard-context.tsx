@@ -10,7 +10,7 @@ import { LinkLockerToastJSX } from "./toast/link-locker-toast";
 
 type ClipboardContextProps = {
   children: React.ReactNode;
-  addOptimisticUrls?: (action: Url) => void;
+  addOptimisticUrls?: (action: Url[]) => void;
 };
 
 const ClipboardContext = (props: ClipboardContextProps) => {
@@ -30,14 +30,16 @@ const ClipboardContext = (props: ClipboardContextProps) => {
         // TODO : make optimistic update
         startTransition(() => {
           // you have used addOptimistic url from useOptimistic useOptimistic is a React Hook that lets you show a different state while an async action is underway. which means you need to have async action underway here SaveLinkServer is async action that is underway.
-          addOptimisticUrls({
-            blur: false,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            id: crypto.randomUUID(),
-            userId: crypto.randomUUID(),
-            url: data,
-          });
+          addOptimisticUrls([
+            {
+              blur: false,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              id: crypto.randomUUID(),
+              userId: crypto.randomUUID(),
+              url: data,
+            },
+          ]);
         });
 
         toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={data} />);

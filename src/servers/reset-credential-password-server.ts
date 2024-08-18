@@ -10,6 +10,12 @@ type ResetCredentialPasswordServerReturnType = {
   data: null;
 };
 
+/**
+ * It will reset your credential account password to new password you have entered.
+ * @param values - ResetCredentialPasswordSchemaType
+ * @param token - The token from email
+ * @returns 
+ */
 export async function ResetCredentialPasswordServer(
   values: ResetCredentialPasswordSchemaType,
   token: string | null

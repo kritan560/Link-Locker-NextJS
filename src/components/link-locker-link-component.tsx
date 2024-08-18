@@ -131,9 +131,11 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleBlurToggleClick() {
-    addOptimisticContent({
-      ...optimisticContent,
-      blur: !optimisticContent.blur,
+    startTransition(() => {
+      addOptimisticContent({
+        ...optimisticContent,
+        blur: !optimisticContent.blur,
+      });
     });
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {

@@ -18,7 +18,7 @@ const PrivateLinkPage = async () => {
   const userId = session.user.id;
   const { data: urls } = await GetPrivateLinks(userId);
 
-  return <PrivateLinkComponent session={session} urls={urls} />;
+  return <PrivateLinkComponent session={session} urls={urls ? urls : []} />;
 };
 
 export default PrivateLinkPage;
