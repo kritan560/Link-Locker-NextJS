@@ -1,14 +1,15 @@
 import { auth } from "@/auth";
 import { ProfileUpdateForm } from "@/components/auth/profile-update-form";
 import LinkLockerLeftComponent from "@/components/link-locker-left-component";
+import LinkLockerProfile from "@/components/link-locker-profile";
 import LinkLockerRightNavbar from "@/components/link-locker-right-navbar";
 import { GetProfileDetail } from "@/servers/get-profile-detail-server";
 import { Metadata } from "next";
 
 // either Static metadata
 export const metadata: Metadata = {
-  title: 'Profile Page',
-}
+  title: "Profile Page",
+};
 
 const ProfilePage = async () => {
   const session = await auth();
@@ -23,24 +24,30 @@ const ProfilePage = async () => {
   const authUserName = data?.name;
 
   return (
-    <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
-      {/* left side */}
-      <LinkLockerLeftComponent showButton={!!session} />
+    // <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
+    //   {/* left side */}
+    //   <LinkLockerLeftComponent showButton={!!session} />
 
-      {/* right side */}
-      <div className="w-full flex-1 py-12 px-8 space-y-10">
-        <LinkLockerRightNavbar session={session} />
+    //   {/* right side */}
+    //   <div className="w-full flex-1 py-12 px-8 space-y-10">
+    //     <LinkLockerRightNavbar session={session} />
 
-        {/* profile update form */}
-        <div>
-          <ProfileUpdateForm
-            email={email}
-            name={authUserName}
-            currentAuthUserAccountType={currentAuthUserAccountType}
-          />
-        </div>
-      </div>
-    </div>
+    //     {/* profile update form */}
+    //     <div>
+    //       <ProfileUpdateForm
+    //         email={email}
+    //         name={authUserName}
+    //         currentAuthUserAccountType={currentAuthUserAccountType}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
+    <LinkLockerProfile
+      authUserName={authUserName}
+      currentAuthUserAccountType={currentAuthUserAccountType}
+      email={email}
+      session={session}
+    />
   );
 };
 

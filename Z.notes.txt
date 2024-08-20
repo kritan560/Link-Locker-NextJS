@@ -73,3 +73,4 @@ calculate the height of a box then display the number of data. if data grand tot
 
 if you are on page 2 and last data is deleted or privated then show page 1
 
+you cannot send function as prop from server component to client compnent however you can send function as prop from client component to client component here in /profile page you have send addOptimisticUrls function as prop

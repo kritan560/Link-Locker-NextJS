@@ -16,7 +16,7 @@ type LinkLockerRightNavbarProps = {
 };
 
 const LinkLockerRightNavbar = (props: LinkLockerRightNavbarProps) => {
-  const { session, addOptimisticUrls } = props;
+  const { session, addOptimisticUrls = () => {} } = props;
 
   const authUserImage = session?.user.image;
 
