@@ -24,9 +24,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@t3-oss/env-nextjs": "0.10.1",
-    "@tanstack/react-table": "^8.20.1",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/nodemailer": "^6.4.15",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -48,6 +45,7 @@
     "react-intersection-observer": "^9.13.0",
     "react-joyride": "^2.8.2",
     "react-loader-spinner": "^6.1.6",
+    "remove": "^0.1.5",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.4.0",
     "tailwind-scrollbar": "^3.1.0",
@@ -55,7 +53,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^18",
     "@types/react-copy-to-clipboard": "^5.0.7",

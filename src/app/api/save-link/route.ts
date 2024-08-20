@@ -11,9 +11,6 @@ export async function POST(
     const session = await auth();
     const userId = session?.user.id;
 
-    console.log(session, "<<<");
-    console.log(request.nextUrl);
-
     if (!userId || !session) {
       return NextResponse.json({
         isUserLoggedIn: false,

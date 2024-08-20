@@ -64,3 +64,12 @@ follow the url
 ✅ use optimistic update for delete and private url unprivate url..
 
 in extenstion show the toast or any messagae that display the url saved account.
+
+use server side state. for pagination and optimistic ui updated
+
+use next and previous page to alter the url. 
+
+calculate the height of a box then display the number of data. if data grand total height is 10px and and display box height is 100px display 10 data url
+
+if you are on page 2 and last data is deleted or privated then show page 1
+

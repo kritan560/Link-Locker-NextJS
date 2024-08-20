@@ -1,11 +1,10 @@
 "use server";
 
-import { Url } from "@prisma/client";
 import prisma from "../../../prisma/db";
 
-type GetLinksReturnType = {
+type GetTotalUrlReturnType = {
   success: boolean;
-  data: Url[] | null;
+  data: number | null;
   message: string;
 };
 
@@ -15,18 +14,20 @@ type GetLinksReturnType = {
  * @param userId - The User Id
  * @returns
  */
-export async function GetLinks(
-  userId: string | undefined
-): Promise<GetLinksReturnType> {
+export async function GetTotalUrl({
+  userId,
+}: {
+  userId: string | undefined;
+}): Promise<GetTotalUrlReturnType> {
   try {
-    const urls = await prisma.url.findMany({
+    const totalUrl = await prisma.url.count({
       where: { userId },
     });
 
     return {
       success: true,
-      data: urls,
-      message: "Got all your links",
+      data: totalUrl,
+      message: "Got total number of Links",
     };
   } catch (error) {
     console.error(error, "Get Link error");
@@ -39,17 +40,70 @@ export async function GetLinks(
   }
 }
 
-type GetLinksPaginationProps = {
-  userId: string | undefined;
-  take: number;
-  skip: number;
+type GetTotalUrlOfSearchedKeywordReturnType = {
+  success: boolean;
+  data: number | null;
+  message: string;
 };
 
-export async function GetLinksPagination(props: GetLinksPaginationProps) {
-  const { userId, skip, take } = props;
+/**
+ * Gets all The links that is related to the active user ID.
+ *
+ * @param userId - The User Id
+ * @returns
+ */
+export async function GetTotalUrlOfSearchedKeyword({
+  userId,
+  searchKeyword,
+}: {
+  userId: string | undefined;
+  searchKeyword: string;
+}): Promise<GetTotalUrlOfSearchedKeywordReturnType> {
+  try {
+    const totalUrl = await prisma.url.count({
+      where: { userId, url: { contains: searchKeyword } },
+    });
+
+    return {
+      success: true,
+      data: totalUrl,
+      message: "Got total number of Links",
+    };
+  } catch (error) {
+    console.error(error, "Get Link error");
+
+    return {
+      success: false,
+      data: null,
+      message: "Something went wrong",
+    };
+  }
+}
+
+export type GetLinksByPageProps = {
+  userId: string | undefined;
+  page: number;
+};
+
+/**
+ * if page 0 exist and it means take 10 document without skipping anything
+ *
+ * @param props
+ * @returns the exactly 10 Url datas if exist else return the remaining.
+ */
+export async function GetLinksByPage(props: GetLinksByPageProps) {
+  const { userId, page } = props;
+
+  const skip = page * 10;
+  const take = 10;
 
   try {
-    const Urls = await prisma.url.findMany({ where: { userId }, take, skip });
+    const Urls = await prisma.url.findMany({
+      where: { userId },
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
 
     return {
       success: true,
@@ -67,24 +121,32 @@ export async function GetLinksPagination(props: GetLinksPaginationProps) {
   }
 }
 
-type GetLinksByPageProps = {
+export type GetLinksBySearchKeywordProps = {
   userId: string | undefined;
+  searchKeyword: string;
   page: number;
 };
 
 /**
- * page 0 exist and it means take 10 document without skipping anything
+ *
  * @param props
- * @returns
+ * @returns the exactly 10 Url datas if exist else return the remaining.
  */
-export async function GetLinksByPage(props: GetLinksByPageProps) {
-  const { userId, page } = props;
+export async function GetLinksBySearchKeyword(
+  props: GetLinksBySearchKeywordProps
+) {
+  const { userId, searchKeyword, page } = props;
 
   const skip = page * 10;
   const take = 10;
 
   try {
-    const Urls = await prisma.url.findMany({ where: { userId }, take, skip });
+    const Urls = await prisma.url.findMany({
+      where: { userId, url: { contains: searchKeyword } },
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
 
     return {
       success: true,

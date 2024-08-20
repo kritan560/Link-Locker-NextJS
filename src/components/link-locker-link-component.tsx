@@ -78,6 +78,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     setCopied(false);
   }
 
+  // Function will copy the content to the clipboard
   function handleCopyClipboard() {
     setCopied(true);
     toast.custom((t) => (
@@ -196,7 +197,9 @@ const LinkComponent = (props: LinkComponentProps) => {
    * @returns
    */
   async function handleMakeLinkPrivate() {
-    addOptimisticContent({ ...optimisticContent, url: "" });
+    startTransition(() => {
+      addOptimisticContent({ ...optimisticContent, url: "" });
+    });
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
       const { data, message, success } = await MakeLinkUnPrivate(

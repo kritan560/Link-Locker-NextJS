@@ -19,34 +19,43 @@ import {
 import { LinkLockerBackgroundColorStyle } from "@/constants/background-color";
 import { LinkLockerHomepage } from "@/constants/routes";
 import { cn } from "@/lib/utils";
-import { GetPrivateLinks } from "@/servers/link/get-private-links";
 import { GetVaultCode } from "@/servers/vault/get-vault-code";
+import { Url } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { Session } from "next-auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import nProgress from "nprogress";
-import { useOptimistic, useState } from "react";
+import { useOptimistic, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { BsAlphabetUppercase } from "react-icons/bs";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 import { Oval } from "react-loader-spinner";
 import LinkComponent from "../link-locker-link-component";
 import { LinkLockerToastJSX } from "../toast/link-locker-toast";
-import { Url } from "@prisma/client";
+import { Input } from "../ui/input";
 
 type PrivateLinkComponentProps = {
   urls: Url[];
   session: Session;
+  currentPage: number;
+  totalPageNumber: number;
 };
 
 const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
-  const { session, urls } = props;
+  const { session, urls, currentPage, totalPageNumber } = props;
 
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
 
-  const [alertDialogOpen, setAlertDialogOpen] = useState(true);
   const [isVaultOpen, setVaultOpen] = useState(false);
+  const [alertDialogOpen, setAlertDialogOpen] = useState(true);
   const [vaultCode, setVaultCode] = useState("");
   const [callBackend, setCallbackend] = useState(false);
   const [isPending, setPending] = useState(false);
+  const [showTitle, setShowTitle] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
 
   const [optimisticPrivateLinks, addOptimisticPrivateLink] = useOptimistic(
     urls,
@@ -90,6 +99,42 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
     setCallbackend(false);
   }
 
+  function handleRightArrowClick() {
+    if (searchParams.get("search")) {
+      router.push(`?search=${searchValue}&page=${currentPage + 1}`);
+
+      nProgress.start();
+      return;
+    }
+
+    router.push(`?page=${currentPage + 1}`);
+    nProgress.start();
+  }
+
+  function handleLeftArrowClick() {
+    if (searchParams.get("search")) {
+      router.push(`?search=${searchValue}&page=${currentPage - 1}`);
+
+      nProgress.start();
+      return;
+    }
+
+    router.push(`?page=${currentPage - 1}`);
+    nProgress.start();
+  }
+
+  function handleFiSearchClick() {
+    setShowTitle(false);
+    if (!showTitle) {
+      router.push(`?search=${searchValue}`);
+      nProgress.start();
+    }
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 99);
+  }
+
   if (isVaultOpen) {
     return (
       <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
@@ -108,16 +153,72 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
 
           {/* links card */}
           <div className=" rounded-2xl px-6 bg-gray-50 dark:bg-stone-700 mt-2 h-[calc(100vh-170px)] relative  overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-500 scrollbar-thumb-rounded-full hover:scrollbar-thumb-sky-400 active:scrollbar-thumb-sky-500 shadow-md shadow-stone-400 dark:shadow-stone-600">
-            <div className="text-center py-3 z-10 bg-gray-50 dark:bg-stone-700 font-semibold text-lg scale-105 sticky top-0">
-              {optimisticPrivateLinks.length > 0 ? (
-                <p>
-                  {" "}
-                  <span className="text-sky-500">Link</span> Locker Got Your
-                  Links
-                </p>
-              ) : (
-                "Currently ther are no links Paste Some links"
+            <div
+              className={cn(
+                "flex sticky top-0 justify-between items-center gap-x-3 py-2 bg-inherit z-10"
               )}
+            >
+              <div className="flex gap-x-3 items-center">
+                <FaArrowCircleLeft
+                  onClick={handleLeftArrowClick}
+                  size={21}
+                  className={cn(
+                    "cursor-pointer",
+                    currentPage <= 0 &&
+                      "opacity-30 pointer-events-none cursor-not-allowed"
+                  )}
+                />
+                <BsAlphabetUppercase
+                  size={21}
+                  className="cursor-pointer"
+                  onClick={() => setShowTitle(true)}
+                />
+              </div>
+
+              {showTitle ? (
+                <div className="text-center h-10 z-10 bg-gray-50 dark:bg-stone-700 font-semibold text-lg scale-105 sticky top-0 flex items-center">
+                  {optimisticPrivateLinks.length > 0 ? (
+                    <p>
+                      {" "}
+                      <span className="text-sky-500">Link</span> Locker Private
+                      Links
+                    </p>
+                  ) : (
+                    "Currently ther are no links Paste Some links"
+                  )}
+                </div>
+              ) : (
+                <Input
+                  placeholder="Search Private Links"
+                  ref={inputRef}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="h-10 bg-stone-800 text-white"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleFiSearchClick();
+                    }
+                  }}
+                />
+              )}
+
+              <div className="flex gap-x-3 items-center">
+                <FiSearch
+                  size={21}
+                  className="cursor-pointer"
+                  onClick={handleFiSearchClick}
+                />
+
+                <FaArrowCircleRight
+                  onClick={handleRightArrowClick}
+                  size={21}
+                  className={cn(
+                    "cursor-pointer",
+                    currentPage >= totalPageNumber - 1 &&
+                      "pointer-events-none opacity-30 cursor-not-allowed"
+                  )}
+                />
+              </div>
             </div>
 
             {/* links */}
@@ -128,7 +229,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
             </div>
 
             {/* this div is to make a padding at bottom : this should not be necessary when padding is given to parent element but it did not work as expecteded so this is a work around */}
-            <div className="sticky bottom-0 bg-gray-50 dark:bg-stone-700 h-10 w-full scale-105"></div>
+            <div className="sticky bottom-0 bg-gray-50 dark:bg-stone-700 h-10 z-10 w-full scale-105"></div>
           </div>
         </div>
       </div>
