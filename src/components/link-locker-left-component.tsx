@@ -65,7 +65,6 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
                   className="cursor-pointer flex gap-x-1 items-center"
                 >
                   <LuDot size={22} />
-                  {/* <span className="text-sky-500">{data.description}</span> */}
                   {data.description}
                 </div>
               )}
@@ -73,7 +72,12 @@ const LinkLockerLeftComponent = (props: LinkLockerLeftComponentProps) => {
             {data.type === LinkLockerDescriptionEnum.STRING && (
               <>
                 <LuDot size={22} />
-                {/* <li className="capitalize">{data.description}</li> */}
+                {data.description}
+              </>
+            )}
+            {data.type === LinkLockerDescriptionEnum.LINK && (
+              <>
+                <LuDot size={22} />
                 {data.description}
               </>
             )}

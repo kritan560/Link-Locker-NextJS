@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { LinkLockerExtensionLink } from "./routes";
+
 export enum LinkLockerDescriptionEnum {
   STRING = "STRING",
   LINK = "LINK",
@@ -12,16 +15,7 @@ type LinkLockerDescriptionType = {
 
 export const LinkLockerDescription: LinkLockerDescriptionType = [
   {
-    id: "random",
-    type: LinkLockerDescriptionEnum.STRING,
-    description: (
-      <span>
-        <span className="font-medium ">Store</span> Your Links
-      </span>
-    ),
-  },
-  {
-    id: "random2",
+    id: crypto.randomUUID(),
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
@@ -30,7 +24,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     ),
   },
   {
-    id: "random3",
+    id: crypto.randomUUID(),
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
@@ -39,7 +33,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     ),
   },
   {
-    id: "random4",
+    id: crypto.randomUUID(),
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
@@ -48,7 +42,7 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     ),
   },
   {
-    id: "random5",
+    id: crypto.randomUUID(),
     type: LinkLockerDescriptionEnum.STRING,
     description: (
       <span className="capitalize">
@@ -57,15 +51,16 @@ export const LinkLockerDescription: LinkLockerDescriptionType = [
     ),
   },
   {
-    id: "random6",
+    id: crypto.randomUUID(),
     type: LinkLockerDescriptionEnum.LINK,
     description: (
-      <span>
-        Get{" "}
-        <span className="font-medium text-sky-800 dark:text-sky-500 cursor-pointer">
-          Chrome Extension
-        </span>
-      </span>
+      <Link
+        target="_blank"
+        href={LinkLockerExtensionLink}
+        className="capitalize font-medium text-sky-500"
+      >
+        Get Chrome Extension
+      </Link>
     ),
   },
   {

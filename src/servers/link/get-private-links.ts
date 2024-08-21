@@ -30,7 +30,7 @@ export async function GetTotalPrivateUrl({
       message: "Got total number of Links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -71,7 +71,7 @@ export async function GetPrivateLinksByPage(props: GetPrivateLinksByPageProps) {
       message: "Got all your links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -102,7 +102,7 @@ export async function GetPrivateLinksBySearchKeyword(
 
   try {
     const Urls = await prisma.privateUrl.findMany({
-      where: { userId, url: { contains: searchKeyword } },
+      where: { userId, url: { contains: searchKeyword, mode: "insensitive" } },
       take,
       skip,
       orderBy: { createdAt: "desc" },
@@ -114,7 +114,7 @@ export async function GetPrivateLinksBySearchKeyword(
       message: "Got all your links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -153,7 +153,7 @@ export async function GetTotalPrivateUrlOfSearchedKeyword({
       message: "Got total number of Links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,

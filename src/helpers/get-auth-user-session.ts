@@ -18,7 +18,7 @@ export async function GetAuthUserSession() {
       type: session?.user.type,
     };
   } catch (error) {
-    console.error(error);
+    
 
     return {
       isUserLoggedIn: null,

@@ -54,7 +54,7 @@ export async function LinkTableServer(
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    
 
     return {
       data: null,

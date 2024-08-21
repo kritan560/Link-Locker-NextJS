@@ -104,7 +104,7 @@ export async function VerifyUserOTPServer(
       };
     }
   } catch (error) {
-    console.error(error, "verify user otp server");
+    //(error, "verify user otp server");
 
     return {
       message: "Something went wrong!!!",

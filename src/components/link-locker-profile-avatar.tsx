@@ -3,7 +3,7 @@
 import {
   LinkLockerLogoutPage,
   LinkLockerPrivateLinkRoute,
-  LinkLockerProfileRoute
+  LinkLockerProfileRoute,
 } from "@/constants/routes";
 import { DropdownMenuItemStyle } from "@/constants/tailwind";
 import { cn } from "@/lib/utils";
@@ -31,11 +31,9 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
   const { authUserImage } = props;
 
   const [openDialog, setOpenDialog] = useState(false);
-
   const router = useRouter();
 
   async function handleSignout() {
-    // await signOut({ callbackUrl: LinkLockerSignInPage, redirect: false });
     router.push(LinkLockerLogoutPage);
 
     nProgress.start();
@@ -56,10 +54,10 @@ const LinkLockerProfileAvatar = (props: LinkLockerProfileAvatarProps) => {
             >
               <Image
                 className="rounded-full cursor-pointer"
-                src={`${authUserImage}?v=2`}
+                src={authUserImage}
                 alt="User image"
                 fill
-                sizes="(min-width: 808px) 50vw, 100vw"
+                // sizes="(min-width: 808px) 50vw, 100vw"
                 style={{ objectFit: "cover" }}
               />
             </div>

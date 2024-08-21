@@ -49,7 +49,7 @@ export async function MakeLinkUnPrivate(
       success: true,
     };
   } catch (error) {
-    console.error(error, "make link private");
+    //(error, "make link private");
 
     return {
       data: null,

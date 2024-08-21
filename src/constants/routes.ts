@@ -7,7 +7,8 @@ export const KritanGithubProfile = "https://github.com/kritan560";
 export const StagingOauth = "/staging-oauth";
 export const LinkLockerLogoutPage = "/logout";
 export const LinkLockerLinkTablePage = "/link-table";
-
+export const LinkLockerExtensionLink =
+  "https://drive.google.com/drive/folders/1R91HMEwPCafgjCCGYFBEVQXR7BY3SU7H?usp=sharing";
 /**
  * @constant LinkLockerVerifyUserPage
  *

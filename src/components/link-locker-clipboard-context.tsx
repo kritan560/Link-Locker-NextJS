@@ -74,7 +74,7 @@ const ClipboardContext = (props: ClipboardContextProps) => {
         ));
       }
     } catch (err) {
-      console.error("Failed to read clipboard contents: ", err);
+      //("Failed to read clipboard contents: ", err);
     }
   };
 

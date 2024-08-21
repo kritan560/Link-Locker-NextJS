@@ -78,7 +78,7 @@ export async function ResetVaultCode(): Promise<ResetVaultCodeReturnType> {
       success: true,
     };
   } catch (error) {
-    console.error(error, "reset vault code error");
+    //(error, "reset vault code error");
 
     return {
       data: null,

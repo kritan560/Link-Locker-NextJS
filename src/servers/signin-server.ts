@@ -127,7 +127,7 @@ export async function SignInCredentialServer(
       message: "Failed to signin",
     };
   } catch (error) {
-    console.error(error, "signin-server");
+    //(error, "signin-server");
 
     return {
       message: "Something went wrong!!!",

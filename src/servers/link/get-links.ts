@@ -30,7 +30,7 @@ export async function GetTotalUrl({
       message: "Got total number of Links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -70,7 +70,7 @@ export async function GetTotalUrlOfSearchedKeyword({
       message: "Got total number of Links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -111,7 +111,7 @@ export async function GetLinksByPage(props: GetLinksByPageProps) {
       message: "Got all your links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,
@@ -142,7 +142,7 @@ export async function GetLinksBySearchKeyword(
 
   try {
     const Urls = await prisma.url.findMany({
-      where: { userId, url: { contains: searchKeyword } },
+      where: { userId, url: { contains: searchKeyword, mode: "insensitive" } },
       take,
       skip,
       orderBy: { createdAt: "desc" },
@@ -154,7 +154,7 @@ export async function GetLinksBySearchKeyword(
       message: "Got all your links",
     };
   } catch (error) {
-    console.error(error, "Get Link error");
+    //(error, "Get Link error");
 
     return {
       success: false,

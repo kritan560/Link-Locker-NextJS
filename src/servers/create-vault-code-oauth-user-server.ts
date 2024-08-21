@@ -64,7 +64,7 @@ export async function CreateVaultCodeOAuthUser(): Promise<CreateVaultCodeOAuthUs
       success: false,
     };
   } catch (error) {
-    // console.error(error);
+    // 
 
     return { message: "Something went wrong", success: false };
   }
