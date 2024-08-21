@@ -46,7 +46,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="mx-10 my-10 rounded-2xl bg-gradient-to-b from-stone-300/50 to-stone-300 dark:bg-gradient-to-b dark:from-stone-800/60 dark:to-stone-800 dark:text-white shadow-lg shadow-stone-400 dark:shadow-stone-700">
+          <div className="mx-0 my-0 md:mx-10 md:my-10 rounded-2xl bg-gradient-to-b from-stone-300/50 to-stone-300 dark:bg-gradient-to-b dark:from-stone-800/60 dark:to-stone-800 dark:text-white shadow-lg shadow-stone-400 dark:shadow-stone-700">
             {/* <TryPasteComponent>
               </TryPasteComponent> */}
             {children}

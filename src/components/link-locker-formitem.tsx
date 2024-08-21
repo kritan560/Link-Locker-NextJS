@@ -49,7 +49,7 @@ const LinkLockerFormItem = (props: LinkLockerFormItemProps) => {
             <Input
               disabled={disabled}
               className={cn(
-                "border-b-0 shadow-md dark:shadow-stone-700 dark:bg-stone-900 h-12 ring-0 border-none placeholder:text-stone-400",
+                "border-b-0 shadow-md dark:shadow-stone-700 dark:bg-stone-900 h-10 md:h-12 ring-0 border-none placeholder:text-stone-400",
                 showInputShadow ? "shadow-md" : "shadow-none"
               )}
               placeholder={placeholder}

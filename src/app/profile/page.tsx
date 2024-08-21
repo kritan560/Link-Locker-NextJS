@@ -24,24 +24,6 @@ const ProfilePage = async () => {
   const authUserName = data?.name;
 
   return (
-    // <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
-    //   {/* left side */}
-    //   <LinkLockerLeftComponent showButton={!!session} />
-
-    //   {/* right side */}
-    //   <div className="w-full flex-1 py-12 px-8 space-y-10">
-    //     <LinkLockerRightNavbar session={session} />
-
-    //     {/* profile update form */}
-    //     <div>
-    //       <ProfileUpdateForm
-    //         email={email}
-    //         name={authUserName}
-    //         currentAuthUserAccountType={currentAuthUserAccountType}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
     <LinkLockerProfile
       authUserName={authUserName}
       currentAuthUserAccountType={currentAuthUserAccountType}

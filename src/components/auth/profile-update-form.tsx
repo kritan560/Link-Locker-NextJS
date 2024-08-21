@@ -63,7 +63,11 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
 
   return (
     <Form {...form}>
-      <form method="POST" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        method="POST"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6"
+      >
         <div className="flex flex-col gap-y-5 md:flex-row md:gap-x-4 md:justify-between">
           <FormField
             control={form.control}
@@ -95,7 +99,7 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
         </div>
         <Button
           disabled={isPending}
-          className="w-full h-12  text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
+          className="w-full h-10 md:h-12 text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
           type="submit"
         >
           <span className="relative">
@@ -109,7 +113,7 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
         </Button>
       </form>
 
-      <div className="flex justify-between items-center mt-8">
+      <div className="md:flex-row flex-col justify-between items-center mt-3">
         <VaultCodeChange isPending={isPending} />
 
         <ChangeCredentialPassword
@@ -118,7 +122,7 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
         />
       </div>
 
-      <div className="mt-4 flex justify-end items-center">
+      <div className="mt-3 flex justify-end items-center">
         <RemoveAccount isPending={isPending} />
       </div>
     </Form>

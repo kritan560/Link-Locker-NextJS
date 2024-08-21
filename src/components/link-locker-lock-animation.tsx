@@ -14,6 +14,7 @@ const LockAnimation = (props: LockAnimationProps) => {
       width={size}
       height={size}
       src={"/LinkLockerLogo.webp"}
+      // src={"/link-locker-icon.svg"}
       alt="logo"
       sizes="(min-width: 808px) 50vw, 100vw"
       style={{ height: size, width: size }}

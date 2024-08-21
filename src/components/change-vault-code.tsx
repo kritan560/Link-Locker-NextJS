@@ -88,7 +88,7 @@ const VaultCodeChange = (props: VaultCodeChangeProps) => {
       <DialogTrigger asChild>
         <Button
           disabled={isPending || isPendingProfileUpdateForm}
-          className="w-fit mt-4 h-12 text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
+          className="w-fit mt-4 h-10 md:h-12 text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
         >
           <span className="flex items-center gap-x-2">
             <PiPassword size={20} />

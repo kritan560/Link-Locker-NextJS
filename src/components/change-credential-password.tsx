@@ -87,7 +87,7 @@ const ChangeCredentialPassword = (props: ChangeCredentialPasswordProps) => {
               isPending ||
               isPendingProfileUpdateForm
             }
-            className="w-fit mt-4 h-12 text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
+            className="w-fit mt-4 md:h-10 h-12 text-white bg-gray-800 hover:bg-gray-900 active:bg-gray-800 transition duration-300"
           >
             <span className="flex items-center gap-x-2">
               <PiPassword size={21} />
