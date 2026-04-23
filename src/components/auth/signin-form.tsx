@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import ButtonWithSpinner from "../button-with-spinner";
@@ -43,7 +43,7 @@ const SignInForm = () => {
       try {
         const { message, success } = await SignInCredentialServer(values);
         if (!success) {
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} error />
           ));
           if (message === "Register to continue") {
@@ -51,7 +51,7 @@ const SignInForm = () => {
             nProgress.start();
           }
         } else if (success) {
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} />
           ));
           if (message === "Login successfully") {
@@ -60,7 +60,7 @@ const SignInForm = () => {
           }
         }
       } catch (error) {
-        // 
+        //
       }
     });
   }
@@ -160,7 +160,7 @@ const SignInForm = () => {
               href={LinkLockerSignUpPage}
               className={cn(
                 "underline  underline-offset-4 block",
-                isPending && "pointer-events-none opacity-65"
+                isPending && "pointer-events-none opacity-65",
               )}
             >
               Sign-Up
@@ -175,3 +175,4 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
+

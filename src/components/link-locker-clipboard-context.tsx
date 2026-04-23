@@ -5,7 +5,7 @@ import { SaveLinkServer } from "@/servers/save-link-server";
 import { Url } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
 import { startTransition } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
 
 type ClipboardContextProps = {
@@ -42,7 +42,9 @@ const ClipboardContext = (props: ClipboardContextProps) => {
           ]);
         });
 
-        toast.custom((t) => <LinkLockerToastJSX t={t} toastMessage={data} />);
+        toast.custom((t: Toast) => (
+          <LinkLockerToastJSX t={t} toastMessage={data} />
+        ));
 
         const { message, success } = await SaveLinkServer({
           clipboardData: data,
@@ -52,20 +54,20 @@ const ClipboardContext = (props: ClipboardContextProps) => {
         if (success) {
           router.refresh();
 
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} />
           ));
         }
 
         if (!success) {
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} error />
           ));
         }
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX
             t={t}
             toastMessage={error.errors[0].message}
@@ -82,3 +84,4 @@ const ClipboardContext = (props: ClipboardContextProps) => {
 };
 
 export default ClipboardContext;
+

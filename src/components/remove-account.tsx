@@ -6,7 +6,7 @@ import { RemoveAccountServer } from "@/servers/remove-account-server";
 import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useState, useTransition } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
 import { Button } from "./ui/button";
 import {
@@ -36,7 +36,7 @@ const RemoveAccount = (props: RemoveAccountProps) => {
       const { message, success } = await RemoveAccountServer();
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
 
@@ -49,7 +49,7 @@ const RemoveAccount = (props: RemoveAccountProps) => {
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -104,3 +104,4 @@ const RemoveAccount = (props: RemoveAccountProps) => {
 };
 
 export default RemoveAccount;
+

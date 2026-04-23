@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import nProgress from "nprogress";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
 import { LinkLockerToastJSX } from "../toast/link-locker-toast";
 import { Button } from "../ui/button";
@@ -37,14 +37,14 @@ const VerifyUserOTP = () => {
       const { success, message } = await VerifyUserOTPServer(hash, value);
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
         router.push(LinkLockerSignInPage);
         nProgress.start();
       }
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error={true} />
         ));
         setMessage({ message: "verification code not match", error: true });
@@ -115,7 +115,7 @@ const VerifyUserOTP = () => {
         <div className="relative h-8 mx-auto w-fit">
           <p
             className={cn(
-              value.length >= 1 && value.length < 6 ? "block" : "hidden"
+              value.length >= 1 && value.length < 6 ? "block" : "hidden",
             )}
           >
             Punching the vault code
@@ -149,3 +149,4 @@ const VerifyUserOTP = () => {
 };
 
 export default VerifyUserOTP;
+

@@ -14,7 +14,7 @@ import { ProfileUpdateServer } from "@/servers/profile-update-server";
 import { User } from "next-auth";
 import { ProviderType } from "next-auth/providers";
 import { useTransition } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ChangeCredentialPassword from "../change-credential-password";
 import VaultCodeChange from "../change-vault-code";
@@ -48,13 +48,13 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
       const { message, success } = await ProfileUpdateServer(values);
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -128,3 +128,4 @@ export function ProfileUpdateForm(props: ProfileUpdateFormProps) {
     </Form>
   );
 }
+

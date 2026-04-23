@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "bg-stone-100/80 dark:bg-inherit overflow-hidden"
+          "bg-stone-100/80 dark:bg-inherit overflow-hidden",
         )}
       >
         <NextTopLoader
@@ -56,3 +56,4 @@ export default function RootLayout({
     </html>
   );
 }
+

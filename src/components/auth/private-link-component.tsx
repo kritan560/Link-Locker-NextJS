@@ -26,7 +26,7 @@ import { Session } from "next-auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import nProgress from "nprogress";
 import { useOptimistic, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { BsAlphabetUppercase } from "react-icons/bs";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
@@ -59,7 +59,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
 
   const [optimisticPrivateLinks, addOptimisticPrivateLink] = useOptimistic(
     urls,
-    (state, action: Url[]) => [...state, ...action]
+    (state, action: Url[]) => [...state, ...action],
   );
 
   function handleCancelClick() {
@@ -84,7 +84,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
     }
 
     if (!isCodeCorrect) {
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX t={t} toastMessage={"Code did not match"} error />
       ));
     }
@@ -155,7 +155,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
           <div className=" rounded-2xl px-6 bg-gray-50 dark:bg-stone-700 mt-2 h-[calc(100vh-170px)] relative  overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-500 scrollbar-thumb-rounded-full hover:scrollbar-thumb-sky-400 active:scrollbar-thumb-sky-500 shadow-md shadow-stone-400 dark:shadow-stone-600">
             <div
               className={cn(
-                "flex sticky top-0 justify-between items-center gap-x-3 py-2 bg-inherit z-10"
+                "flex sticky top-0 justify-between items-center gap-x-3 py-2 bg-inherit z-10",
               )}
             >
               <div className="flex gap-x-3 items-center">
@@ -165,7 +165,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
                   className={cn(
                     "cursor-pointer",
                     currentPage <= 0 &&
-                      "opacity-30 pointer-events-none cursor-not-allowed"
+                      "opacity-30 pointer-events-none cursor-not-allowed",
                   )}
                 />
                 <BsAlphabetUppercase
@@ -215,7 +215,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
                   className={cn(
                     "cursor-pointer",
                     currentPage >= totalPageNumber - 1 &&
-                      "pointer-events-none opacity-30 cursor-not-allowed"
+                      "pointer-events-none opacity-30 cursor-not-allowed",
                   )}
                 />
               </div>
@@ -260,7 +260,7 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
             maxLength={6}
             value={vaultCode}
             onChange={(value) => {
-              setVaultCode(value), setCallbackend(true);
+              (setVaultCode(value), setCallbackend(true));
             }}
           >
             <InputOTPGroup>
@@ -277,7 +277,9 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
         <div className="relative h-8 mx-auto w-fit">
           <p
             className={cn(
-              vaultCode.length >= 1 && vaultCode.length < 6 ? "block" : "hidden"
+              vaultCode.length >= 1 && vaultCode.length < 6
+                ? "block"
+                : "hidden",
             )}
           >
             Punching the vault code
@@ -309,3 +311,4 @@ const PrivateLinkComponent = (props: PrivateLinkComponentProps) => {
 };
 
 export default PrivateLinkComponent;
+

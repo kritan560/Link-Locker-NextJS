@@ -5,19 +5,17 @@ import { Metadata } from "next";
 
 // either Static metadata
 export const metadata: Metadata = {
-  title: 'Reset Credential Password',
-}
+  title: "Reset Credential Password",
+};
 
 type ResetCredentialPasswordPageProps = {
   searchParams: Promise<{ token: string }>;
 };
 
-const ResetCredentialPasswordPage = (
-  props: ResetCredentialPasswordPageProps
+const ResetCredentialPasswordPage = async (
+  props: ResetCredentialPasswordPageProps,
 ) => {
-  const {
-    searchParams: { token },
-  } = props;
+  const { token } = await props.searchParams;
 
   return (
     <div className="overflow-clip h-[calc(100vh-80px)] font-light flex justify-between">
@@ -38,3 +36,4 @@ const ResetCredentialPasswordPage = (
 };
 
 export default ResetCredentialPasswordPage;
+

@@ -19,9 +19,7 @@ type PrivateLinkPageProps = {
 };
 
 const PrivateLinkPage = async (props: PrivateLinkPageProps) => {
-  const {
-    searchParams: { page, search },
-  } = props;
+  const { page, search } = await props.searchParams;
 
   const session = await auth();
 
@@ -67,7 +65,7 @@ const PrivateLinkPage = async (props: PrivateLinkPageProps) => {
     {
       totalData: TotalUrlData,
       page,
-    }
+    },
   );
 
   const { data, message, success } = await GetPrivateLinksByPage({
@@ -86,3 +84,4 @@ const PrivateLinkPage = async (props: PrivateLinkPageProps) => {
 };
 
 export default PrivateLinkPage;
+

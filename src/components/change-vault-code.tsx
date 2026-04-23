@@ -3,7 +3,7 @@
 import { ChangeVaultCode } from "@/servers/vault/change-vault-code";
 import { ResetVaultCode } from "@/servers/vault/reset-vault-code";
 import React, { useTransition } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { PiPassword } from "react-icons/pi";
 import ButtonWithSpinner from "./button-with-spinner";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
@@ -37,23 +37,23 @@ const VaultCodeChange = (props: VaultCodeChangeProps) => {
       if (oldVaultCode.length === 6 && newVaultCode.length === 6) {
         const { message, success } = await ChangeVaultCode(
           oldVaultCode,
-          newVaultCode
+          newVaultCode,
         );
 
         if (success) {
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} />
           ));
           setOpenDialog(false);
         }
 
         if (!success) {
-          toast.custom((t) => (
+          toast.custom((t: Toast) => (
             <LinkLockerToastJSX t={t} toastMessage={message} error />
           ));
         }
       } else {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX
             t={t}
             toastMessage={"Old Code and New Code length must be 6 digit"}
@@ -69,14 +69,14 @@ const VaultCodeChange = (props: VaultCodeChangeProps) => {
       const { message, success } = await ResetVaultCode();
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
         setOpenDialog(false);
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -176,3 +176,4 @@ const VaultCodeChange = (props: VaultCodeChangeProps) => {
 };
 
 export default VaultCodeChange;
+

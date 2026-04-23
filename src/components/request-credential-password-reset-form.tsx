@@ -17,7 +17,7 @@ import { RequestCredentialPasswordResetTokenServer } from "@/servers/request-cre
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import ButtonWithSpinner from "./button-with-spinner";
 import LinkLockerFormItem from "./link-locker-formitem";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
@@ -29,7 +29,7 @@ type RequestCredentialPasswordResetFormProps = {
 };
 
 const RequestCredentialPasswordResetForm = (
-  props: RequestCredentialPasswordResetFormProps
+  props: RequestCredentialPasswordResetFormProps,
 ) => {
   const { isPending } = props;
 
@@ -55,7 +55,7 @@ const RequestCredentialPasswordResetForm = (
         await RequestCredentialPasswordResetTokenServer(values.email);
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
         setOpenDialog(false);
@@ -63,7 +63,7 @@ const RequestCredentialPasswordResetForm = (
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
         setOpenDialog(false);
@@ -89,7 +89,7 @@ const RequestCredentialPasswordResetForm = (
         <Form {...requestCredentialPasswordResetForm}>
           <form
             onSubmit={requestCredentialPasswordResetForm.handleSubmit(
-              resetPassword
+              resetPassword,
             )}
             className="space-y-8"
           >
@@ -121,3 +121,4 @@ const RequestCredentialPasswordResetForm = (
 };
 
 export default RequestCredentialPasswordResetForm;
+

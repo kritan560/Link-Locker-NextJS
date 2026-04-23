@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Session } from "next-auth";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { PiPassword } from "react-icons/pi";
 import ButtonWithSpinner from "./button-with-spinner";
 import LinkLockerFormItem from "./link-locker-formitem";
@@ -55,18 +55,18 @@ const ChangeCredentialPassword = (props: ChangeCredentialPasswordProps) => {
     startTranstion(async () => {
       const { message, success } = await ChangeCredentialPasswordServer(
         values.oldPassword,
-        values.newPassword
+        values.newPassword,
       );
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
         setOpenDialog(false);
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -152,3 +152,4 @@ const ChangeCredentialPassword = (props: ChangeCredentialPasswordProps) => {
 };
 
 export default ChangeCredentialPassword;
+

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import ButtonWithSpinner from "../button-with-spinner";
@@ -40,7 +40,7 @@ const SignUpForm = () => {
       const { data, message, success } = await SignUpServer(values);
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
 
@@ -50,12 +50,15 @@ const SignUpForm = () => {
           nProgress.start();
         }
       } else if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error={!success} />
         ));
 
         // redirecting user to the homepage when user already exist
-        if (message === "User Already Exist in Server redirecting you to signin page") {
+        if (
+          message ===
+          "User Already Exist in Server redirecting you to signin page"
+        ) {
           router.push(LinkLockerHomepage);
           nProgress.start();
         }
@@ -156,7 +159,7 @@ const SignUpForm = () => {
               href={LinkLockerSignInPage}
               className={cn(
                 "underline  underline-offset-4 block",
-                isPending && "pointer-events-none opacity-65"
+                isPending && "pointer-events-none opacity-65",
               )}
             >
               Sign-In
@@ -169,3 +172,4 @@ const SignUpForm = () => {
 };
 
 export default SignUpForm;
+

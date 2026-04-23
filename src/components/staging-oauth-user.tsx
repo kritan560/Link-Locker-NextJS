@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import nProgress from "nprogress";
 import { useEffect, useTransition } from "react";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import { ThreeDots } from "react-loader-spinner";
 
 /**
@@ -28,13 +28,13 @@ const StagingOauthUser = () => {
       const { success, message } = await CreateVaultCodeOAuthUser();
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
       }
@@ -97,3 +97,4 @@ const StagingOauthUser = () => {
 };
 
 export default StagingOauthUser;
+

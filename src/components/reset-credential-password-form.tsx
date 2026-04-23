@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Suspense, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 import ButtonWithSpinner from "./button-with-spinner";
 import LinkLockerFormItem from "./link-locker-formitem";
 import { LinkLockerToastJSX } from "./toast/link-locker-toast";
@@ -21,7 +21,7 @@ type ResetCredentialPasswordFormProps = {
 };
 
 const ResetCredentialPasswordForm = (
-  props: ResetCredentialPasswordFormProps
+  props: ResetCredentialPasswordFormProps,
 ) => {
   const { token } = props;
   const router = useRouter();
@@ -40,11 +40,11 @@ const ResetCredentialPasswordForm = (
     startTransition(async () => {
       const { data, message, success } = await ResetCredentialPasswordServer(
         values,
-        token
+        token,
       );
 
       if (success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} />
         ));
 
@@ -52,7 +52,7 @@ const ResetCredentialPasswordForm = (
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -105,3 +105,4 @@ const ResetCredentialPasswordForm = (
 };
 
 export default ResetCredentialPasswordForm;
+

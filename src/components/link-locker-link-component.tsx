@@ -17,7 +17,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { startTransition, useOptimistic, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { toast } from "react-hot-toast";
+import { Toast, toast } from "react-hot-toast";
 import { BsReddit, BsThreeDots, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 import {
   FaFacebook,
@@ -71,7 +71,7 @@ const LinkComponent = (props: LinkComponentProps) => {
 
   const [optimisticContent, addOptimisticContent] = useOptimistic(
     content,
-    (state, action: Url) => ({ ...state, ...action })
+    (state, action: Url) => ({ ...state, ...action }),
   );
 
   if (copied) {
@@ -81,7 +81,7 @@ const LinkComponent = (props: LinkComponentProps) => {
   // Function will copy the content to the clipboard
   function handleCopyClipboard() {
     setCopied(true);
-    toast.custom((t) => (
+    toast.custom((t: Toast) => (
       <LinkLockerToastJSX t={t} toastMessage="Link copied to clipboard" />
     ));
   }
@@ -98,7 +98,7 @@ const LinkComponent = (props: LinkComponentProps) => {
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
       const { data, message, success } = await DeletePrivateLink(
-        optimisticContent.id
+        optimisticContent.id,
       );
 
       if (success) {
@@ -106,7 +106,7 @@ const LinkComponent = (props: LinkComponentProps) => {
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -121,7 +121,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     }
 
     if (!success) {
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX t={t} toastMessage={message} error />
       ));
     }
@@ -140,16 +140,15 @@ const LinkComponent = (props: LinkComponentProps) => {
     });
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
-      const { data, message, success } = await BlurPrivateLink(
-        optimisticContent
-      );
+      const { data, message, success } =
+        await BlurPrivateLink(optimisticContent);
 
       if (success) {
         router.refresh();
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -164,7 +163,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     }
 
     if (!success) {
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX t={t} toastMessage={message} error />
       ));
     }
@@ -177,18 +176,18 @@ const LinkComponent = (props: LinkComponentProps) => {
   async function writeClipboardText(text: string) {
     try {
       await navigator.clipboard.writeText(text);
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX t={t} toastMessage="URL copied to clipboard" />
       ));
     } catch (error) {
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX
           t={t}
           toastMessage="Something went wrong unexpectdly"
           error
         />
       ));
-      // 
+      //
     }
   }
 
@@ -202,16 +201,15 @@ const LinkComponent = (props: LinkComponentProps) => {
     });
 
     if (pathname.startsWith(LinkLockerPrivateLinkRoute)) {
-      const { data, message, success } = await MakeLinkUnPrivate(
-        optimisticContent
-      );
+      const { data, message, success } =
+        await MakeLinkUnPrivate(optimisticContent);
 
       if (success) {
         router.refresh();
       }
 
       if (!success) {
-        toast.custom((t) => (
+        toast.custom((t: Toast) => (
           <LinkLockerToastJSX t={t} toastMessage={message} error />
         ));
       }
@@ -226,7 +224,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     }
 
     if (!success) {
-      toast.custom((t) => (
+      toast.custom((t: Toast) => (
         <LinkLockerToastJSX t={t} toastMessage={message} error />
       ));
     }
@@ -351,7 +349,7 @@ const LinkComponent = (props: LinkComponentProps) => {
                       target="_blank"
                       href={getRedditShareURL(
                         "Link Locker Save Your Links",
-                        optimisticContent.url
+                        optimisticContent.url,
                       )}
                     >
                       <BsReddit size={55} />
@@ -415,3 +413,4 @@ const LinkComponent = (props: LinkComponentProps) => {
 };
 
 export default LinkComponent;
+

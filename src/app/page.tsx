@@ -19,9 +19,7 @@ type HomePageProps = {
 };
 
 export default async function HomePage(props: HomePageProps) {
-  const {
-    searchParams: { page, search },
-  } = props;
+  const { page, search } = await props.searchParams;
 
   const session = await auth();
 
@@ -65,7 +63,7 @@ export default async function HomePage(props: HomePageProps) {
     {
       totalData: TotalUrlData,
       page,
-    }
+    },
   );
 
   const { data, message, success } = await GetLinksByPage({
@@ -82,3 +80,4 @@ export default async function HomePage(props: HomePageProps) {
     />
   );
 }
+
