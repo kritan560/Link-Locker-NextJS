@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 type ResetCredentialPasswordPageProps = {
-  searchParams: { token: string };
+  searchParams: Promise<{ token: string }>;
 };
 
 const ResetCredentialPasswordPage = (

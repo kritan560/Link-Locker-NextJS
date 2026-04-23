@@ -7,7 +7,7 @@
     "dev-t": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.2",
@@ -30,15 +30,15 @@
     "dayjs": "^1.11.12",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.424.0",
-    "next": "14.2.5",
+    "next": "16.2.4",
     "next-auth": "^5.0.0-beta.20",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.12",
     "nodemailer": "^6.9.14",
     "nprogress": "^0.2.0",
-    "react": "^18",
+    "react": "19.2.5",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "^18",
+    "react-dom": "19.2.5",
     "react-hook-form": "^7.52.2",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
@@ -57,14 +57,18 @@
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.15",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^18",
+    "@types/react": "19.2.14",
     "@types/react-copy-to-clipboard": "^5.0.7",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
     "postcss": "^8",
     "prisma": "^5.17.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
   }
 }

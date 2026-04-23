@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 type PrivateLinkPageProps = {
-  searchParams: { page: string; search: string };
+  searchParams: Promise<{ page: string; search: string }>;
 };
 
 const PrivateLinkPage = async (props: PrivateLinkPageProps) => {

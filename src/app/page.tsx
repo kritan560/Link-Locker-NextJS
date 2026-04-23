@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 type HomePageProps = {
-  searchParams: { page: string; search: string };
+  searchParams: Promise<{ page: string; search: string }>;
 };
 
 export default async function HomePage(props: HomePageProps) {
